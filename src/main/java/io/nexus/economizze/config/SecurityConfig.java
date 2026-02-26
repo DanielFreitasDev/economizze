@@ -30,7 +30,16 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/setup/**", "/css/**", "/js/**", "/images/**", "/swagger-ui/**", "/v3/api-docs/**")
+                        .requestMatchers(
+                                "/setup/**",
+                                "/css/**",
+                                "/js/**",
+                                "/images/**",
+                                "/favicon.ico",
+                                "/favicon.svg",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**"
+                        )
                         .permitAll()
                         .requestMatchers("/api/**").authenticated()
                         .anyRequest().authenticated())

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Favicon Economizze">
+  <defs>
+    <linearGradient id="fundo" x1="10" y1="8" x2="54" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0b4f6c" />
+      <stop offset="1" stop-color="#1f7a8c" />
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#fundo)" />
+  <rect x="18" y="15" width="8" height="34" rx="4" fill="#ffffff" />
+  <rect x="18" y="15" width="26" height="8" rx="4" fill="#ffffff" />
+  <rect x="18" y="28" width="20" height="8" rx="4" fill="#ffffff" />
+  <rect x="18" y="41" width="26" height="8" rx="4" fill="#ffffff" />
+  <circle cx="47" cy="18" r="9" fill="#ff9f1c" stroke="#ffffff" stroke-width="2" />
+  <path d="M47 14v8M43 18h8" stroke="#ffffff" stroke-width="2" stroke-linecap="round" />
+</svg>
