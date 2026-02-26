@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login | Economizze</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer">
   <link rel="stylesheet" th:href="@{/css/app.css}">
   <script>
     (function () {
@@ -22,9 +23,15 @@
 </head>
 <body>
 <div class="login-wrapper">
-  <button class="btn-tema-login" type="button" data-acao="alternar-tema" aria-pressed="false">TEMA: CLARO</button>
+  <button class="btn-tema-login" type="button" data-acao="alternar-tema" aria-pressed="false">
+    <i class="fa-solid fa-sun" aria-hidden="true"></i>
+    <span>TEMA: CLARO</span>
+  </button>
   <div class="login-card">
-    <h2>ACESSAR ECONOMIZZE</h2>
+    <h2>
+      <i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i>
+      <span>ACESSAR ECONOMIZZE</span>
+    </h2>
     <p class="texto-muted">Controle financeiro completo, com foco em mobilidade.</p>
 
     <div class="alert alert-sucesso" th:if="${param.setupConcluido}">Primeiro administrador criado com sucesso.</div>
@@ -40,7 +47,10 @@
         <label for="password">SENHA</label>
         <input id="password" name="password" type="password" required>
       </div>
-      <button class="btn btn-primario" type="submit">ENTRAR</button>
+      <button class="btn btn-primario" type="submit">
+        <i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i>
+        <span>ENTRAR</span>
+      </button>
     </form>
   </div>
 </div>

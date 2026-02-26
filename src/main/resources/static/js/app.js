@@ -43,6 +43,134 @@
   }
 
   /**
+   * Normaliza textos da interface para facilitar comparacoes de rotulos.
+   * O objetivo e permitir mapeamento de icones sem depender de acento, caixa ou espacos extras.
+   */
+  function normalizarTextoParaIcone(texto) {
+    const textoBase = texto || '';
+    const textoSemAcento = typeof textoBase.normalize === 'function'
+      ? textoBase.normalize('NFD')
+      : textoBase;
+
+    return textoSemAcento
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .toUpperCase();
+  }
+
+  /**
+   * Aplica um icone no inicio do elemento mantendo o texto original como fallback visual.
+   * A marcacao e idempotente para evitar duplicacao de icones em recargas parciais do DOM.
+   */
+  function aplicarIconeEmElemento(elemento, classeIcone) {
+    if (!elemento || !classeIcone) {
+      return;
+    }
+
+    if (elemento.dataset.iconeAplicado === 'true') {
+      return;
+    }
+
+    if (elemento.querySelector('i.fa-solid')) {
+      elemento.classList.add('com-icone');
+      elemento.dataset.iconeAplicado = 'true';
+      return;
+    }
+
+    const textoOriginal = (elemento.textContent || '').replace(/\s+/g, ' ').trim();
+    if (!textoOriginal) {
+      return;
+    }
+
+    elemento.innerHTML = `<i class="fa-solid ${classeIcone}" aria-hidden="true"></i><span>${textoOriginal}</span>`;
+    elemento.classList.add('com-icone');
+    elemento.dataset.iconeAplicado = 'true';
+  }
+
+  /**
+   * Resolve o icone ideal para botoes de acao com base no texto exibido.
+   * O mapeamento cobre os verbos mais usados do sistema para manter padrao visual entre telas.
+   */
+  function obterClasseIconeAcao(textoNormalizado) {
+    const mapaIcones = {
+      FILTRAR: 'fa-filter',
+      'MES ATUAL': 'fa-calendar-days',
+      SALVAR: 'fa-floppy-disk',
+      VOLTAR: 'fa-arrow-left',
+      VER: 'fa-eye',
+      EDITAR: 'fa-pen-to-square',
+      DESATIVAR: 'fa-ban',
+      EXCLUIR: 'fa-trash',
+      GERENCIAR: 'fa-sliders',
+      CONSULTAR: 'fa-magnifying-glass',
+      'GERAR PDF': 'fa-file-pdf',
+      ATUALIZAR: 'fa-rotate',
+      ENTRAR: 'fa-right-to-bracket',
+      SENHA: 'fa-key',
+      'CRIAR PRIMEIRO ADMINISTRADOR': 'fa-user-plus',
+      'VOLTAR AO INICIO': 'fa-house'
+    };
+
+    if (mapaIcones[textoNormalizado]) {
+      return mapaIcones[textoNormalizado];
+    }
+
+    if (textoNormalizado.startsWith('NOVO') || textoNormalizado.startsWith('NOVA')) {
+      return 'fa-plus';
+    }
+
+    return null;
+  }
+
+  /**
+   * Resolve o icone de titulos de cards para reforcar contexto de cada secao.
+   * A regra usa termos-chave em vez de igualdade estrita para funcionar com diferentes variacoes de titulo.
+   */
+  function obterClasseIconeTitulo(textoNormalizado) {
+    const regrasTitulo = [
+      { termo: 'FLUXO MENSAL', icone: 'fa-chart-line' },
+      { termo: 'RELATORIO', icone: 'fa-chart-column' },
+      { termo: 'RESUMO', icone: 'fa-chart-pie' },
+      { termo: 'OCORRENCIAS', icone: 'fa-calendar-check' },
+      { termo: 'CADASTROS BASE', icone: 'fa-database' },
+      { termo: 'DETALHES', icone: 'fa-circle-info' },
+      { termo: 'LANCAMENT', icone: 'fa-list-check' },
+      { termo: 'COBRANC', icone: 'fa-file-invoice-dollar' },
+      { termo: 'PESSOA', icone: 'fa-users' },
+      { termo: 'CART', icone: 'fa-credit-card' },
+      { termo: 'CATEGOR', icone: 'fa-tags' },
+      { termo: 'CONTA', icone: 'fa-wallet' },
+      { termo: 'TRANSFER', icone: 'fa-right-left' },
+      { termo: 'PAGAMENTO', icone: 'fa-money-check-dollar' },
+      { termo: 'USUARIO', icone: 'fa-user-shield' },
+      { termo: 'CONFIGURAC', icone: 'fa-sliders' },
+      { termo: 'ERRO', icone: 'fa-triangle-exclamation' }
+    ];
+
+    const regraEncontrada = regrasTitulo.find((regra) => textoNormalizado.includes(regra.termo));
+    return regraEncontrada ? regraEncontrada.icone : null;
+  }
+
+  /**
+   * Enriquecer a UI com icones de apoio em botoes e titulos principais.
+   * Essa etapa roda apos o carregamento da pagina para reutilizar o mesmo HTML em todas as telas.
+   */
+  function inicializarIconesContextuais() {
+    document.querySelectorAll('.btn').forEach((botao) => {
+      const textoNormalizado = normalizarTextoParaIcone(botao.textContent);
+      const classeIcone = obterClasseIconeAcao(textoNormalizado);
+      aplicarIconeEmElemento(botao, classeIcone);
+    });
+
+    document.querySelectorAll('.card h2, .card h3, .login-card h2').forEach((titulo) => {
+      const textoNormalizado = normalizarTextoParaIcone(titulo.textContent);
+      const classeIcone = obterClasseIconeTitulo(textoNormalizado);
+      aplicarIconeEmElemento(titulo, classeIcone);
+    });
+  }
+
+  /**
    * Aplica o tema no documento e sincroniza os botoes de alternancia.
    * O rotulo e o estado ARIA sao atualizados para acessibilidade e feedback visual.
    */
@@ -52,7 +180,10 @@
 
     document.querySelectorAll('[data-acao="alternar-tema"]').forEach((botao) => {
       const temaEscuroAtivo = temaAplicado === TEMA_ESCURO;
-      botao.textContent = temaEscuroAtivo ? 'TEMA: ESCURO' : 'TEMA: CLARO';
+      const rotuloTema = temaEscuroAtivo ? 'TEMA: ESCURO' : 'TEMA: CLARO';
+      const classeIconeTema = temaEscuroAtivo ? 'fa-moon' : 'fa-sun';
+      botao.innerHTML = `<i class="fa-solid ${classeIconeTema}" aria-hidden="true"></i><span>${rotuloTema}</span>`;
+      botao.classList.add('com-icone');
       botao.setAttribute('aria-pressed', String(temaEscuroAtivo));
       botao.setAttribute('title', temaEscuroAtivo ? 'Ativar tema claro' : 'Ativar tema escuro');
     });
@@ -336,6 +467,7 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     inicializarAlternadorTema();
+    inicializarIconesContextuais();
     inicializarMascaras();
     inicializarMaiusculo();
     inicializarWhatsappMesmoCelular();

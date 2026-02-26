@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer">
   <link rel="stylesheet" th:href="@{/css/app.css}">
   <script>
     (function () {
@@ -28,28 +29,73 @@
   <div class="layout">
     <header class="topbar">
       <div class="topbar-grid">
-        <h1 th:text="${nomeAplicacao}">Economizze</h1>
+        <h1>
+          <i class="fa-solid fa-piggy-bank" aria-hidden="true"></i>
+          <span th:text="${nomeAplicacao}">Economizze</span>
+        </h1>
         <small th:if="${usuarioLogado != null}">
           USUÁRIO: <span th:text="${usuarioLogado.nomeCompleto}"></span>
           | PERFIL: <span th:text="${usuarioLogado.perfil}"></span>
         </small>
       </div>
       <nav class="nav-mobile">
-        <a th:href="@{/dashboard}" th:classappend="${caminhoAtual == '/dashboard'} ? 'ativo'">INÍCIO</a>
-        <a th:href="@{/lancamentos}" th:classappend="${#strings.startsWith(caminhoAtual, '/lancamentos')} ? 'ativo'">LANÇAMENTOS</a>
-        <a th:href="@{/cobrancas}" th:classappend="${#strings.startsWith(caminhoAtual, '/cobrancas')} ? 'ativo'">COBRANÇAS</a>
-        <a th:href="@{/pessoas}" th:classappend="${#strings.startsWith(caminhoAtual, '/pessoas')} ? 'ativo'">PESSOAS</a>
-        <a th:href="@{/cartoes}" th:classappend="${#strings.startsWith(caminhoAtual, '/cartoes')} ? 'ativo'">CARTÕES</a>
-        <a th:href="@{/categorias}" th:classappend="${#strings.startsWith(caminhoAtual, '/categorias')} ? 'ativo'">CATEGORIAS</a>
-        <a th:href="@{/contas}" th:classappend="${#strings.startsWith(caminhoAtual, '/contas')} ? 'ativo'">CONTAS</a>
-        <a th:href="@{/transferencias}" th:classappend="${#strings.startsWith(caminhoAtual, '/transferencias')} ? 'ativo'">TRANSFERÊNCIAS</a>
-        <a th:href="@{/pagamentos}" th:classappend="${#strings.startsWith(caminhoAtual, '/pagamentos')} ? 'ativo'">PAGAMENTOS</a>
-        <a th:href="@{/relatorios/pessoas}" th:classappend="${#strings.startsWith(caminhoAtual, '/relatorios')} ? 'ativo'">RELATÓRIOS</a>
-        <a th:href="@{/configuracoes/financeiras}" th:classappend="${#strings.startsWith(caminhoAtual, '/configuracoes')} ? 'ativo'">CONFIGURAÇÕES</a>
-        <a th:href="@{/usuarios}" sec:authorize="hasRole('ADMIN')" th:classappend="${#strings.startsWith(caminhoAtual, '/usuarios')} ? 'ativo'">USUÁRIOS</a>
-        <button class="btn-menu-tema" type="button" data-acao="alternar-tema" aria-pressed="false">TEMA: CLARO</button>
+        <a th:href="@{/dashboard}" th:classappend="${caminhoAtual == '/dashboard'} ? 'ativo'">
+          <i class="fa-solid fa-house" aria-hidden="true"></i>
+          <span>INÍCIO</span>
+        </a>
+        <a th:href="@{/lancamentos}" th:classappend="${#strings.startsWith(caminhoAtual, '/lancamentos')} ? 'ativo'">
+          <i class="fa-solid fa-list-check" aria-hidden="true"></i>
+          <span>LANÇAMENTOS</span>
+        </a>
+        <a th:href="@{/cobrancas}" th:classappend="${#strings.startsWith(caminhoAtual, '/cobrancas')} ? 'ativo'">
+          <i class="fa-solid fa-file-invoice-dollar" aria-hidden="true"></i>
+          <span>COBRANÇAS</span>
+        </a>
+        <a th:href="@{/pessoas}" th:classappend="${#strings.startsWith(caminhoAtual, '/pessoas')} ? 'ativo'">
+          <i class="fa-solid fa-users" aria-hidden="true"></i>
+          <span>PESSOAS</span>
+        </a>
+        <a th:href="@{/cartoes}" th:classappend="${#strings.startsWith(caminhoAtual, '/cartoes')} ? 'ativo'">
+          <i class="fa-solid fa-credit-card" aria-hidden="true"></i>
+          <span>CARTÕES</span>
+        </a>
+        <a th:href="@{/categorias}" th:classappend="${#strings.startsWith(caminhoAtual, '/categorias')} ? 'ativo'">
+          <i class="fa-solid fa-tags" aria-hidden="true"></i>
+          <span>CATEGORIAS</span>
+        </a>
+        <a th:href="@{/contas}" th:classappend="${#strings.startsWith(caminhoAtual, '/contas')} ? 'ativo'">
+          <i class="fa-solid fa-wallet" aria-hidden="true"></i>
+          <span>CONTAS</span>
+        </a>
+        <a th:href="@{/transferencias}" th:classappend="${#strings.startsWith(caminhoAtual, '/transferencias')} ? 'ativo'">
+          <i class="fa-solid fa-right-left" aria-hidden="true"></i>
+          <span>TRANSFERÊNCIAS</span>
+        </a>
+        <a th:href="@{/pagamentos}" th:classappend="${#strings.startsWith(caminhoAtual, '/pagamentos')} ? 'ativo'">
+          <i class="fa-solid fa-money-check-dollar" aria-hidden="true"></i>
+          <span>PAGAMENTOS</span>
+        </a>
+        <a th:href="@{/relatorios/pessoas}" th:classappend="${#strings.startsWith(caminhoAtual, '/relatorios')} ? 'ativo'">
+          <i class="fa-solid fa-chart-column" aria-hidden="true"></i>
+          <span>RELATÓRIOS</span>
+        </a>
+        <a th:href="@{/configuracoes/financeiras}" th:classappend="${#strings.startsWith(caminhoAtual, '/configuracoes')} ? 'ativo'">
+          <i class="fa-solid fa-sliders" aria-hidden="true"></i>
+          <span>CONFIGURAÇÕES</span>
+        </a>
+        <a th:href="@{/usuarios}" sec:authorize="hasRole('ADMIN')" th:classappend="${#strings.startsWith(caminhoAtual, '/usuarios')} ? 'ativo'">
+          <i class="fa-solid fa-user-shield" aria-hidden="true"></i>
+          <span>USUÁRIOS</span>
+        </a>
+        <button class="btn-menu-tema" type="button" data-acao="alternar-tema" aria-pressed="false">
+          <i class="fa-solid fa-sun" aria-hidden="true"></i>
+          <span>TEMA: CLARO</span>
+        </button>
         <form class="menu-sair" th:action="@{/logout}" method="post">
-          <button class="btn-menu-sair" type="submit">SAIR</button>
+          <button class="btn-menu-sair" type="submit">
+            <i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i>
+            <span>SAIR</span>
+          </button>
         </form>
       </nav>
     </header>
