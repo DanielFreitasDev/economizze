@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="head(titulo)">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,10 +26,17 @@
         <a th:href="@{/cobrancas}" th:classappend="${#strings.startsWith(caminhoAtual, '/cobrancas')} ? 'ativo'">COBRANCAS</a>
         <a th:href="@{/pessoas}" th:classappend="${#strings.startsWith(caminhoAtual, '/pessoas')} ? 'ativo'">PESSOAS</a>
         <a th:href="@{/cartoes}" th:classappend="${#strings.startsWith(caminhoAtual, '/cartoes')} ? 'ativo'">CARTOES</a>
+        <a th:href="@{/categorias}" th:classappend="${#strings.startsWith(caminhoAtual, '/categorias')} ? 'ativo'">CATEGORIAS</a>
+        <a th:href="@{/contas}" th:classappend="${#strings.startsWith(caminhoAtual, '/contas')} ? 'ativo'">CONTAS</a>
+        <a th:href="@{/transferencias}" th:classappend="${#strings.startsWith(caminhoAtual, '/transferencias')} ? 'ativo'">TRANSFERENCIAS</a>
+        <a th:href="@{/pagamentos}" th:classappend="${#strings.startsWith(caminhoAtual, '/pagamentos')} ? 'ativo'">PAGAMENTOS</a>
+        <a th:href="@{/relatorios/pessoas}" th:classappend="${#strings.startsWith(caminhoAtual, '/relatorios')} ? 'ativo'">RELATORIOS</a>
+        <a th:href="@{/configuracoes/financeiras}" th:classappend="${#strings.startsWith(caminhoAtual, '/configuracoes')} ? 'ativo'">CONFIGURACOES</a>
+        <a th:href="@{/usuarios}" sec:authorize="hasRole('ADMIN')" th:classappend="${#strings.startsWith(caminhoAtual, '/usuarios')} ? 'ativo'">USUARIOS</a>
+        <form class="menu-sair" th:action="@{/logout}" method="post">
+          <button class="btn-menu-sair" type="submit">SAIR</button>
+        </form>
       </nav>
-      <form th:action="@{/logout}" method="post" style="margin-top:0.5rem;">
-        <button class="btn btn-secundario" type="submit">SAIR</button>
-      </form>
     </header>
 
     <main class="main">
