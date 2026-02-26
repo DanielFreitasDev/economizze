@@ -73,7 +73,10 @@
           <div>
             <label for="whatsapp">WHATSAPP</label>
             <input id="whatsapp" th:field="*{whatsapp}" class="telefone-mask">
-            <small><input id="copiarCelularWhatsapp" type="checkbox"> USAR O MESMO DO CELULAR</small>
+            <label class="opcao-whatsapp-celular" for="copiarCelularWhatsapp">
+              <input id="copiarCelularWhatsapp" type="checkbox">
+              <span>USAR O MESMO DO CELULAR</span>
+            </label>
           </div>
         </div>
 
