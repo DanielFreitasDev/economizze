@@ -425,6 +425,30 @@ h3.com-icone .fa-solid {
   align-items: center;
 }
 
+.btn-menu-mobile {
+  display: none;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.55rem;
+  padding: 0.45rem 0.72rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--cor-topbar-texto);
+  font-size: 0.72rem;
+  font-weight: 800;
+  cursor: pointer;
+  position: relative;
+  z-index: 30;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-menu-mobile .fa-solid {
+  font-size: 0.76rem;
+  line-height: 1;
+}
+
 .nav-mobile a,
 .btn-menu-sair,
 .btn-menu-tema {
@@ -462,6 +486,8 @@ h3.com-icone .fa-solid {
 .btn-menu-sair:focus-visible,
 .btn-menu-tema:hover,
 .btn-menu-tema:focus-visible,
+.btn-menu-mobile:hover,
+.btn-menu-mobile:focus-visible,
 .nav-mobile a:hover,
 .nav-mobile a:focus-visible {
   filter: brightness(1.08);
@@ -469,6 +495,7 @@ h3.com-icone .fa-solid {
 
 .btn-menu-sair:focus-visible,
 .btn-menu-tema:focus-visible,
+.btn-menu-mobile:focus-visible,
 .nav-mobile a:focus-visible {
   outline: 2px solid var(--cor-nav-item-focus);
   outline-offset: 1px;
@@ -539,6 +566,48 @@ h3.com-icone .fa-solid {
   font-size: 0.86rem;
 }
 
+@media (max-width: 767.98px) {
+  .btn-menu-mobile {
+    display: flex;
+    width: 100%;
+    min-height: 44px;
+    justify-content: center;
+    pointer-events: auto;
+  }
+
+  .topbar.menu-mobile-pronto .nav-mobile {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    margin-top: 0;
+    transition: max-height 0.28s ease, opacity 0.2s ease, margin-top 0.2s ease;
+  }
+
+  .topbar.menu-mobile-pronto .nav-mobile.menu-mobile-aberto {
+    max-height: 70vh;
+    opacity: 1;
+    overflow-y: auto;
+    pointer-events: auto;
+    margin-top: 0.6rem;
+    padding-right: 0.15rem;
+  }
+
+  .topbar.menu-mobile-pronto .nav-mobile a,
+  .topbar.menu-mobile-pronto .btn-menu-sair,
+  .topbar.menu-mobile-pronto .btn-menu-tema {
+    width: 100%;
+    justify-content: flex-start;
+    border-radius: 12px;
+    padding: 0.56rem 0.72rem;
+    font-size: 0.74rem;
+  }
+
+  .topbar.menu-mobile-pronto .menu-sair {
+    width: 100%;
+  }
+}
+
 @media (min-width: 768px) {
   .main {
     padding: 1.2rem 1.2rem 2rem;
@@ -566,5 +635,9 @@ h3.com-icone .fa-solid {
   .btn-menu-tema {
     padding: 0.35rem 0.6rem;
     font-size: 0.72rem;
+  }
+
+  .btn-menu-mobile {
+    display: none;
   }
 }

@@ -207,6 +207,110 @@
     });
   }
 
+  /**
+   * Controla a experiencia do menu principal em telas pequenas.
+   * A navegacao fica colapsada por padrao no mobile para reduzir poluicao visual.
+   * Em desktop, remove as classes de controle para manter o layout original sem alteracoes.
+   */
+  function inicializarMenuMobile() {
+    const mediaMobile = window.matchMedia('(max-width: 767.98px)');
+    const barraTopo = document.querySelector('.topbar');
+    const botaoMenu = document.querySelector('[data-acao="alternar-menu-mobile"]');
+    const menuPrincipal = document.querySelector('[data-menu-mobile]');
+
+    if (!barraTopo || !botaoMenu || !menuPrincipal) {
+      return;
+    }
+
+    const itensQueFechamMenu = menuPrincipal.querySelectorAll('a, button');
+
+    /**
+     * Mantem texto/icone do botao sincronizados com o estado do menu.
+     * O feedback explicito evita duvida para o usuario sobre a acao disponivel.
+     */
+    function atualizarBotaoMenu(estaAberto) {
+      const icone = estaAberto ? 'fa-xmark' : 'fa-bars';
+      const rotulo = estaAberto ? 'FECHAR' : 'MENU';
+      botaoMenu.innerHTML = `<i class="fa-solid ${icone}" aria-hidden="true"></i><span>${rotulo}</span>`;
+      botaoMenu.setAttribute('aria-expanded', String(estaAberto));
+    }
+
+    /**
+     * Centraliza a mudanca de estado visual do menu mobile.
+     * Com isso, qualquer gatilho de abertura/fechamento reaproveita a mesma regra.
+     */
+    function definirEstadoMenu(estaAberto) {
+      menuPrincipal.classList.toggle('menu-mobile-aberto', estaAberto);
+      atualizarBotaoMenu(estaAberto);
+    }
+
+    /**
+     * Liga o modo colapsado apenas quando a viewport e mobile.
+     * Ao sair do mobile, limpa classes para evitar estado residual.
+     */
+    function aplicarModoResponsivo() {
+      if (mediaMobile.matches) {
+        barraTopo.classList.add('menu-mobile-pronto');
+        definirEstadoMenu(false);
+        return;
+      }
+
+      barraTopo.classList.remove('menu-mobile-pronto');
+      menuPrincipal.classList.remove('menu-mobile-aberto');
+      atualizarBotaoMenu(false);
+    }
+
+    botaoMenu.addEventListener('click', () => {
+      if (!mediaMobile.matches) {
+        return;
+      }
+
+      const estaAberto = menuPrincipal.classList.contains('menu-mobile-aberto');
+      definirEstadoMenu(!estaAberto);
+    });
+
+    document.addEventListener('click', (evento) => {
+      if (!mediaMobile.matches || !menuPrincipal.classList.contains('menu-mobile-aberto')) {
+        return;
+      }
+
+      const alvo = evento.target;
+      if (!(alvo instanceof Element)) {
+        return;
+      }
+
+      if (!barraTopo.contains(alvo)) {
+        definirEstadoMenu(false);
+      }
+    });
+
+    document.addEventListener('keydown', (evento) => {
+      if (evento.key !== 'Escape') {
+        return;
+      }
+
+      if (mediaMobile.matches && menuPrincipal.classList.contains('menu-mobile-aberto')) {
+        definirEstadoMenu(false);
+      }
+    });
+
+    itensQueFechamMenu.forEach((item) => {
+      item.addEventListener('click', () => {
+        if (mediaMobile.matches) {
+          definirEstadoMenu(false);
+        }
+      });
+    });
+
+    if (typeof mediaMobile.addEventListener === 'function') {
+      mediaMobile.addEventListener('change', aplicarModoResponsivo);
+    } else if (typeof mediaMobile.addListener === 'function') {
+      mediaMobile.addListener(aplicarModoResponsivo);
+    }
+
+    aplicarModoResponsivo();
+  }
+
   function manterSomenteDigitos(valor) {
     return (valor || '').replace(/\D/g, '');
   }
@@ -467,6 +571,7 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     inicializarAlternadorTema();
+    inicializarMenuMobile();
     inicializarIconesContextuais();
     inicializarMascaras();
     inicializarMaiusculo();

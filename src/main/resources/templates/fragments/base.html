@@ -38,7 +38,11 @@
           | PERFIL: <span th:text="${usuarioLogado.perfil}"></span>
         </small>
       </div>
-      <nav class="nav-mobile">
+      <button class="btn-menu-mobile" type="button" data-acao="alternar-menu-mobile" aria-expanded="false" aria-controls="menu-principal-mobile">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        <span>MENU</span>
+      </button>
+      <nav class="nav-mobile" id="menu-principal-mobile" data-menu-mobile>
         <a th:href="@{/dashboard}" th:classappend="${caminhoAtual == '/dashboard'} ? 'ativo'">
           <i class="fa-solid fa-house" aria-hidden="true"></i>
           <span>INÍCIO</span>
