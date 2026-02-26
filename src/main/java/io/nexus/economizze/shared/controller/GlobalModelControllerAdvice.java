@@ -1,5 +1,6 @@
 package io.nexus.economizze.shared.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import io.nexus.economizze.usuario.model.Usuario;
 import io.nexus.economizze.usuario.service.UsuarioService;
 import java.security.Principal;
@@ -42,5 +43,25 @@ public class GlobalModelControllerAdvice {
             return null;
         }
         return usuarioService.buscarPorUsername(principal.getName());
+    }
+
+    /**
+     * Disponibiliza o caminho atual da requisicao para controle de menu ativo nas views.
+     *
+     * <p>Esse atributo evita dependencia de objetos internos do motor de template, mantendo
+     * compatibilidade entre versoes do Thymeleaf/Spring.</p>
+     *
+     * @param requisicaoHttp requisicao HTTP atual recebida pelo Spring MVC
+     * @return caminho da URL atual (ex.: "/dashboard"), ou string vazia quando nao existir
+     */
+    @ModelAttribute("caminhoAtual")
+    public String caminhoAtual(HttpServletRequest requisicaoHttp) {
+        // Protege as views de cenarios sem request valido, evitando NullPointer em expressoes.
+        if (requisicaoHttp == null || requisicaoHttp.getRequestURI() == null) {
+            return "";
+        }
+
+        // Retorna o caminho corrente para destacar o item correto no menu de navegacao.
+        return requisicaoHttp.getRequestURI();
     }
 }

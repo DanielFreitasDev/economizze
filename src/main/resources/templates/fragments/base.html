@@ -21,11 +21,11 @@
         </small>
       </div>
       <nav class="nav-mobile">
-        <a th:href="@{/dashboard}" th:classappend="${#httpServletRequest.requestURI == '/dashboard'} ? 'ativo'">INICIO</a>
-        <a th:href="@{/lancamentos}" th:classappend="${#httpServletRequest.requestURI.startsWith('/lancamentos')} ? 'ativo'">LANCAMENTOS</a>
-        <a th:href="@{/cobrancas}" th:classappend="${#httpServletRequest.requestURI.startsWith('/cobrancas')} ? 'ativo'">COBRANCAS</a>
-        <a th:href="@{/pessoas}" th:classappend="${#httpServletRequest.requestURI.startsWith('/pessoas')} ? 'ativo'">PESSOAS</a>
-        <a th:href="@{/cartoes}" th:classappend="${#httpServletRequest.requestURI.startsWith('/cartoes')} ? 'ativo'">CARTOES</a>
+        <a th:href="@{/dashboard}" th:classappend="${caminhoAtual == '/dashboard'} ? 'ativo'">INICIO</a>
+        <a th:href="@{/lancamentos}" th:classappend="${#strings.startsWith(caminhoAtual, '/lancamentos')} ? 'ativo'">LANCAMENTOS</a>
+        <a th:href="@{/cobrancas}" th:classappend="${#strings.startsWith(caminhoAtual, '/cobrancas')} ? 'ativo'">COBRANCAS</a>
+        <a th:href="@{/pessoas}" th:classappend="${#strings.startsWith(caminhoAtual, '/pessoas')} ? 'ativo'">PESSOAS</a>
+        <a th:href="@{/cartoes}" th:classappend="${#strings.startsWith(caminhoAtual, '/cartoes')} ? 'ativo'">CARTOES</a>
       </nav>
       <form th:action="@{/logout}" method="post" style="margin-top:0.5rem;">
         <button class="btn btn-secundario" type="submit">SAIR</button>
