@@ -1,4 +1,81 @@
 (function () {
+  const CHAVE_TEMA = 'economizze-tema';
+  const TEMA_CLARO = 'claro';
+  const TEMA_ESCURO = 'escuro';
+
+  /**
+   * Garante que apenas temas suportados sejam aplicados.
+   * Isso evita estados invalidos quando o valor salvo no navegador estiver corrompido.
+   */
+  function temaEhValido(tema) {
+    return tema === TEMA_CLARO || tema === TEMA_ESCURO;
+  }
+
+  /**
+   * Resolve o tema inicial com prioridade para a preferencia persistida do usuario.
+   * Se nao existir valor salvo, usa a preferencia nativa do sistema operacional.
+   */
+  function obterTemaInicial() {
+    try {
+      const temaSalvo = localStorage.getItem(CHAVE_TEMA);
+      if (temaEhValido(temaSalvo)) {
+        return temaSalvo;
+      }
+    } catch (erro) {
+      // Se o acesso ao storage falhar, segue com a preferencia do sistema.
+    }
+
+    const mediaQuery = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    const prefereEscuro = Boolean(mediaQuery && mediaQuery.matches);
+    return prefereEscuro ? TEMA_ESCURO : TEMA_CLARO;
+  }
+
+  /**
+   * Persiste o tema escolhido para manter a mesma experiencia em proximos acessos.
+   * A escrita e protegida por try/catch para nao impactar o restante da aplicacao.
+   */
+  function salvarTema(tema) {
+    try {
+      localStorage.setItem(CHAVE_TEMA, tema);
+    } catch (erro) {
+      // Falha silenciosa em ambientes com bloqueio de storage.
+    }
+  }
+
+  /**
+   * Aplica o tema no documento e sincroniza os botoes de alternancia.
+   * O rotulo e o estado ARIA sao atualizados para acessibilidade e feedback visual.
+   */
+  function aplicarTema(tema) {
+    const temaAplicado = temaEhValido(tema) ? tema : TEMA_CLARO;
+    document.documentElement.setAttribute('data-tema', temaAplicado);
+
+    document.querySelectorAll('[data-acao="alternar-tema"]').forEach((botao) => {
+      const temaEscuroAtivo = temaAplicado === TEMA_ESCURO;
+      botao.textContent = temaEscuroAtivo ? 'TEMA: ESCURO' : 'TEMA: CLARO';
+      botao.setAttribute('aria-pressed', String(temaEscuroAtivo));
+      botao.setAttribute('title', temaEscuroAtivo ? 'Ativar tema claro' : 'Ativar tema escuro');
+    });
+  }
+
+  /**
+   * Configura os eventos de clique para alternar entre tema claro e escuro.
+   * Tambem aplica o tema inicial para manter consistencia em todas as paginas.
+   */
+  function inicializarAlternadorTema() {
+    const temaInicial = obterTemaInicial();
+    aplicarTema(temaInicial);
+
+    document.querySelectorAll('[data-acao="alternar-tema"]').forEach((botao) => {
+      botao.addEventListener('click', () => {
+        const temaAtual = document.documentElement.getAttribute('data-tema');
+        const proximoTema = temaAtual === TEMA_ESCURO ? TEMA_CLARO : TEMA_ESCURO;
+        aplicarTema(proximoTema);
+        salvarTema(proximoTema);
+      });
+    });
+  }
+
   function manterSomenteDigitos(valor) {
     return (valor || '').replace(/\D/g, '');
   }
@@ -258,6 +335,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
+    inicializarAlternadorTema();
     inicializarMascaras();
     inicializarMaiusculo();
     inicializarWhatsappMesmoCelular();

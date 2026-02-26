@@ -8,6 +8,20 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" th:href="@{/css/app.css}">
+  <script>
+    (function () {
+      try {
+        const chaveTema = "economizze-tema";
+        const temaSalvo = localStorage.getItem(chaveTema);
+        const temaValido = temaSalvo === "claro" || temaSalvo === "escuro";
+        const prefereEscuro = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const temaInicial = temaValido ? temaSalvo : (prefereEscuro ? "escuro" : "claro");
+        document.documentElement.setAttribute("data-tema", temaInicial);
+      } catch (erro) {
+        document.documentElement.setAttribute("data-tema", "claro");
+      }
+    })();
+  </script>
 </head>
 <body>
 <div th:fragment="pagina(titulo,conteudo)">
@@ -33,6 +47,7 @@
         <a th:href="@{/relatorios/pessoas}" th:classappend="${#strings.startsWith(caminhoAtual, '/relatorios')} ? 'ativo'">RELATÓRIOS</a>
         <a th:href="@{/configuracoes/financeiras}" th:classappend="${#strings.startsWith(caminhoAtual, '/configuracoes')} ? 'ativo'">CONFIGURAÇÕES</a>
         <a th:href="@{/usuarios}" sec:authorize="hasRole('ADMIN')" th:classappend="${#strings.startsWith(caminhoAtual, '/usuarios')} ? 'ativo'">USUÁRIOS</a>
+        <button class="btn-menu-tema" type="button" data-acao="alternar-tema" aria-pressed="false">TEMA: CLARO</button>
         <form class="menu-sair" th:action="@{/logout}" method="post">
           <button class="btn-menu-sair" type="submit">SAIR</button>
         </form>

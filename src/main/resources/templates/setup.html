@@ -5,9 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Setup Inicial | Economizze</title>
   <link rel="stylesheet" th:href="@{/css/app.css}">
+  <script>
+    (function () {
+      try {
+        const chaveTema = "economizze-tema";
+        const temaSalvo = localStorage.getItem(chaveTema);
+        const temaValido = temaSalvo === "claro" || temaSalvo === "escuro";
+        const prefereEscuro = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const temaInicial = temaValido ? temaSalvo : (prefereEscuro ? "escuro" : "claro");
+        document.documentElement.setAttribute("data-tema", temaInicial);
+      } catch (erro) {
+        document.documentElement.setAttribute("data-tema", "claro");
+      }
+    })();
+  </script>
 </head>
 <body>
 <div class="login-wrapper">
+  <button class="btn-tema-login" type="button" data-acao="alternar-tema" aria-pressed="false">TEMA: CLARO</button>
   <div class="login-card">
     <h2>CONFIGURAÇÃO INICIAL</h2>
     <p class="texto-muted">Crie o primeiro usuário administrador para liberar o sistema.</p>
