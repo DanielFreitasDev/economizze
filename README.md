@@ -142,20 +142,32 @@ Jar gerado:
 
 ## Docker
 
-### Build da imagem
+### 1) Criar arquivo de ambiente
+
+```bash
+cp .env.exemple .env
+```
+
+Ajuste os valores do arquivo `.env` conforme seu ambiente, principalmente `DB_URL`, `DB_USERNAME` e `DB_PASSWORD`.
+
+### 2) Build da imagem
 
 ```bash
 docker build -t economizze:latest .
 ```
 
-### Execucao
+### 3) Execucao
 
 ```bash
 docker run --rm -p 8080:8080 \
-  -e DB_URL=jdbc:postgresql://host.docker.internal:5432/economizze \
-  -e DB_USERNAME=postgres \
-  -e DB_PASSWORD=postgres \
+  --env-file .env \
   economizze:latest
+```
+
+Em Linux, caso use `host.docker.internal`, pode ser necessario adicionar:
+
+```bash
+--add-host=host.docker.internal:host-gateway
 ```
 
 ## Endpoints API (resumo)
