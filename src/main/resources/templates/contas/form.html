@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/base :: head('Formulario de Conta')}"></head>
+<body>
+<div th:replace="~{fragments/base :: pagina('Contas', ~{::conteudo})}">
+  <div th:fragment="conteudo">
+    <section class="card">
+      <h2 th:text="${acao == 'criar'} ? 'NOVA CONTA' : 'EDITAR CONTA'"></h2>
+      <form class="grid" th:object="${contaForm}" th:action="${acao == 'criar'} ? @{/contas} : @{/contas/{id}(id=${conta.id})}" method="post">
+        <div class="grid grid-2">
+          <div>
+            <label for="nome">NOME *</label>
+            <input id="nome" th:field="*{nome}" class="uppercase-input" required>
+          </div>
+          <div>
+            <label for="banco">BANCO</label>
+            <input id="banco" th:field="*{banco}" class="uppercase-input">
+          </div>
+        </div>
+        <div class="grid grid-2">
+          <div>
+            <label for="tipoConta">TIPO *</label>
+            <select id="tipoConta" th:field="*{tipoConta}" required>
+              <option value="">SELECIONE</option>
+              <option th:each="tipo : ${tiposConta}" th:value="${tipo}" th:text="${tipo}"></option>
+            </select>
+          </div>
+          <div>
+            <label for="saldoInicial">SALDO INICIAL *</label>
+            <input id="saldoInicial" th:field="*{saldoInicial}" class="moeda-input" required>
+          </div>
+        </div>
+        <div class="btn-grupo">
+          <button class="btn btn-primario" type="submit">SALVAR</button>
+          <a class="btn btn-secundario" th:href="@{/contas}">VOLTAR</a>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>
+</body>
+</html>

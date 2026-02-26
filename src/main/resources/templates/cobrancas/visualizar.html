@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/base :: head('Visualizar Cobranca')}"></head>
+<body>
+<div th:replace="~{fragments/base :: pagina('Cobrancas', ~{::conteudo})}">
+  <div th:fragment="conteudo">
+    <section class="card">
+      <h2>DETALHES DA COBRANCA</h2>
+      <div class="grid grid-2">
+        <div><label>PESSOA</label><div th:text="${cobranca.pessoa.nome}"></div></div>
+        <div><label>CARTAO</label><div th:text="${cobranca.cartao.banco + ' **** ' + #strings.substring(cobranca.cartao.numeroCartao, cobranca.cartao.numeroCartao.length() - 4, cobranca.cartao.numeroCartao.length())}"></div></div>
+        <div><label>DESCRICAO</label><div th:text="${cobranca.descricao}"></div></div>
+        <div><label>TIPO</label><div th:text="${cobranca.tipo}"></div></div>
+        <div><label>VALOR</label><div th:text="${@formatador.moeda(cobranca.valor)}"></div></div>
+        <div><label>DATA BASE</label><div th:text="${#temporals.format(cobranca.dataBase, 'dd/MM/yyyy')}"></div></div>
+        <div><label>STATUS</label><div th:text="${cobranca.ativo} ? 'ATIVO' : 'INATIVO'"></div></div>
+      </div>
+      <div class="btn-grupo" style="margin-top:1rem;">
+        <a class="btn btn-sucesso" th:href="@{/cobrancas/{id}/editar(id=${cobranca.id})}" sec:authorize="hasRole('ADMIN')">EDITAR</a>
+        <a class="btn btn-secundario" th:href="@{/cobrancas}">VOLTAR</a>
+      </div>
+    </section>
+  </div>
+</div>
+</body>
+</html>

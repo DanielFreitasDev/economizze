@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/base :: head('Formulario de Cobranca')}"></head>
+<body>
+<div th:replace="~{fragments/base :: pagina('Cobrancas', ~{::conteudo})}">
+  <div th:fragment="conteudo">
+    <section class="card">
+      <h2 th:text="${acao == 'criar'} ? 'NOVA COBRANCA' : 'EDITAR COBRANCA'"></h2>
+      <form class="grid" th:object="${cobrancaPessoaForm}" th:action="${acao == 'criar'} ? @{/cobrancas} : @{/cobrancas/{id}(id=${cobranca.id})}" method="post">
+        <div class="grid grid-3">
+          <div>
+            <label for="pessoaId">PESSOA *</label>
+            <select id="pessoaId" th:field="*{pessoaId}" required>
+              <option value="">SELECIONE</option>
+              <option th:each="pessoa : ${pessoas}" th:value="${pessoa.id}" th:text="${pessoa.nome}"></option>
+            </select>
+          </div>
+          <div>
+            <label for="cartaoId">CARTAO *</label>
+            <select id="cartaoId" th:field="*{cartaoId}" required>
+              <option value="">SELECIONE</option>
+              <option th:each="cartao : ${cartoes}" th:value="${cartao.id}" th:text="${cartao.banco + ' **** ' + #strings.substring(cartao.numeroCartao, cartao.numeroCartao.length() - 4, cartao.numeroCartao.length())}"></option>
+            </select>
+          </div>
+          <div>
+            <label for="categoriaId">CATEGORIA</label>
+            <select id="categoriaId" th:field="*{categoriaId}">
+              <option value="">SELECIONE</option>
+              <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nome}"></option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-3">
+          <div>
+            <label for="descricao">DESCRICAO *</label>
+            <input id="descricao" th:field="*{descricao}" class="uppercase-input" required>
+          </div>
+          <div>
+            <label for="tipo">TIPO *</label>
+            <select id="tipo" th:field="*{tipo}" required>
+              <option value="">SELECIONE</option>
+              <option th:each="tipo : ${tipos}" th:value="${tipo}" th:text="${tipo}"></option>
+            </select>
+          </div>
+          <div>
+            <label for="valor">VALOR *</label>
+            <input id="valor" th:field="*{valor}" class="moeda-input" required>
+          </div>
+        </div>
+
+        <div class="grid grid-3">
+          <div>
+            <label for="dataBase">DATA DA COMPRA *</label>
+            <input id="dataBase" th:field="*{dataBase}" type="date" required>
+          </div>
+          <div>
+            <label for="totalParcelas">TOTAL PARCELAS</label>
+            <input id="totalParcelas" th:field="*{totalParcelas}" type="number" min="2">
+          </div>
+          <div>
+            <label for="dataFimRecorrencia">DATA FIM RECORRENCIA</label>
+            <input id="dataFimRecorrencia" th:field="*{dataFimRecorrencia}" type="date">
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div>
+            <label for="competenciaFaturaInicial">COMPETENCIA FATURA</label>
+            <select id="competenciaFaturaInicial" th:field="*{competenciaFaturaInicial}">
+              <option value="">SELECIONE</option>
+              <option th:if="*{competenciaFaturaInicial != null}"
+                      th:value="*{competenciaFaturaInicial}"
+                      th:text="${#temporals.format(cobrancaPessoaForm.competenciaFaturaInicial, 'yyyy-MM')}"></option>
+            </select>
+          </div>
+          <div>
+            <label for="observacao">OBSERVACAO</label>
+            <textarea id="observacao" th:field="*{observacao}" class="uppercase-input"></textarea>
+          </div>
+        </div>
+
+        <div class="btn-grupo">
+          <button class="btn btn-primario" type="submit">SALVAR</button>
+          <a class="btn btn-secundario" th:href="@{/cobrancas}">VOLTAR</a>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>
+</body>
+</html>

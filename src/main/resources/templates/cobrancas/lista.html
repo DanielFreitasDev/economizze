@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/base :: head('Cobrancas')}"></head>
+<body>
+<div th:replace="~{fragments/base :: pagina('Cobrancas', ~{::conteudo})}">
+  <div th:fragment="conteudo">
+    <section class="card">
+      <h2>COBRANCAS DE TERCEIROS</h2>
+      <form class="grid grid-2" method="get" th:action="@{/cobrancas}">
+        <div>
+          <label for="competencia">COMPETENCIA</label>
+          <input id="competencia" name="competencia" type="month" th:value="${competencia}">
+        </div>
+        <div class="btn-grupo" style="align-self:end;">
+          <button class="btn btn-primario" type="submit">FILTRAR</button>
+          <a class="btn btn-secundario" th:href="@{/cobrancas}">MES ATUAL</a>
+          <a class="btn btn-primario" th:href="@{/cobrancas/novo}" sec:authorize="hasRole('ADMIN')">NOVA</a>
+        </div>
+      </form>
+    </section>
+
+    <section class="card">
+      <h3>OCORRENCIAS DA COMPETENCIA</h3>
+      <div class="tabela-wrapper">
+        <table class="tabela">
+          <thead><tr><th>PESSOA</th><th>CARTAO</th><th>DESCRICAO</th><th>TIPO</th><th>PARCELA</th><th>VALOR</th></tr></thead>
+          <tbody>
+          <tr th:if="${#lists.isEmpty(ocorrencias)}"><td colspan="6">Nenhuma ocorrencia no mes.</td></tr>
+          <tr th:each="item : ${ocorrencias}">
+            <td th:text="${item.pessoaNome}"></td>
+            <td th:text="${item.cartaoDescricao}"></td>
+            <td th:text="${item.descricao}"></td>
+            <td th:text="${item.tipo}"></td>
+            <td th:text="${item.parcelaAtual != null ? item.parcelaAtual + '/' + item.totalParcelas : '-'}"></td>
+            <td class="valor" th:text="${@formatador.moeda(item.valor)}"></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3>CADASTROS BASE</h3>
+      <div class="tabela-wrapper">
+        <table class="tabela">
+          <thead><tr><th>PESSOA</th><th>CARTAO</th><th>DESCRICAO</th><th>TIPO</th><th>VALOR</th><th>STATUS</th><th>ACOES</th></tr></thead>
+          <tbody>
+          <tr th:if="${#lists.isEmpty(cobrancasBase)}"><td colspan="7">Nenhuma cobranca cadastrada.</td></tr>
+          <tr th:each="item : ${cobrancasBase}">
+            <td th:text="${item.pessoa.nome}"></td>
+            <td th:text="${item.cartao.banco + ' **** ' + #strings.substring(item.cartao.numeroCartao, item.cartao.numeroCartao.length() - 4, item.cartao.numeroCartao.length())}"></td>
+            <td th:text="${item.descricao}"></td>
+            <td th:text="${item.tipo}"></td>
+            <td class="valor" th:text="${@formatador.moeda(item.valor)}"></td>
+            <td><span class="tag" th:classappend="${!item.ativo} ? 'tag-inativo'" th:text="${item.ativo} ? 'ATIVO' : 'INATIVO'"></span></td>
+            <td>
+              <div class="btn-grupo">
+                <a class="btn btn-secundario" th:href="@{/cobrancas/{id}(id=${item.id})}">VER</a>
+                <a class="btn btn-sucesso" th:href="@{/cobrancas/{id}/editar(id=${item.id})}" sec:authorize="hasRole('ADMIN')">EDITAR</a>
+                <form th:action="@{/cobrancas/{id}/desativar(id=${item.id})}" method="post" th:if="${item.ativo}" sec:authorize="hasRole('ADMIN')">
+                  <button class="btn btn-alerta" type="submit">DESATIVAR</button>
+                </form>
+                <form th:action="@{/cobrancas/{id}/excluir(id=${item.id})}" method="post" sec:authorize="hasRole('ADMIN')">
+                  <button class="btn btn-danger" type="submit">EXCLUIR</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>
+</body>
+</html>

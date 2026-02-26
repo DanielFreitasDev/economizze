@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/base :: head('Visualizar Lancamento')}"></head>
+<body>
+<div th:replace="~{fragments/base :: pagina('Lancamentos', ~{::conteudo})}">
+  <div th:fragment="conteudo">
+    <section class="card">
+      <h2>DETALHES DO LANCAMENTO</h2>
+      <div class="grid grid-2">
+        <div><label>NOME</label><div th:text="${lancamento.nome}"></div></div>
+        <div><label>NATUREZA</label><div th:text="${lancamento.natureza}"></div></div>
+        <div><label>TIPO</label><div th:text="${lancamento.tipo}"></div></div>
+        <div><label>VALOR</label><div th:text="${@formatador.moeda(lancamento.valor)}"></div></div>
+        <div><label>CATEGORIA</label><div th:text="${lancamento.categoria.nome}"></div></div>
+        <div><label>ORIGEM</label><div th:text="${lancamento.conta != null ? lancamento.conta.nome : lancamento.cartao.banco}"></div></div>
+        <div><label>DATA BASE</label><div th:text="${#temporals.format(lancamento.dataBase, 'dd/MM/yyyy')}"></div></div>
+        <div><label>STATUS</label><div th:text="${lancamento.ativo} ? 'ATIVO' : 'INATIVO'"></div></div>
+      </div>
+      <div class="btn-grupo" style="margin-top:1rem;">
+        <a class="btn btn-sucesso" th:href="@{/lancamentos/{id}/editar(id=${lancamento.id})}" sec:authorize="hasRole('ADMIN')">EDITAR</a>
+        <a class="btn btn-secundario" th:href="@{/lancamentos}">VOLTAR</a>
+      </div>
+    </section>
+  </div>
+</div>
+</body>
+</html>

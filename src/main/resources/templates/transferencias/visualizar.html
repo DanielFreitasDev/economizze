@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/base :: head('Visualizar Transferencia')}"></head>
+<body>
+<div th:replace="~{fragments/base :: pagina('Transferencias', ~{::conteudo})}">
+  <div th:fragment="conteudo">
+    <section class="card">
+      <h2>DETALHES DA TRANSFERENCIA</h2>
+      <div class="grid grid-2">
+        <div><label>DESCRICAO</label><div th:text="${transferencia.descricao}"></div></div>
+        <div><label>TIPO</label><div th:text="${transferencia.tipo}"></div></div>
+        <div><label>CONTA ORIGEM</label><div th:text="${transferencia.contaOrigem.nome}"></div></div>
+        <div><label>CONTA DESTINO</label><div th:text="${transferencia.contaDestino.nome}"></div></div>
+        <div><label>VALOR</label><div th:text="${@formatador.moeda(transferencia.valor)}"></div></div>
+        <div><label>DATA BASE</label><div th:text="${#temporals.format(transferencia.dataBase, 'dd/MM/yyyy')}"></div></div>
+        <div><label>STATUS</label><div th:text="${transferencia.ativo} ? 'ATIVO' : 'INATIVO'"></div></div>
+      </div>
+      <div class="btn-grupo" style="margin-top:1rem;">
+        <a class="btn btn-sucesso" th:href="@{/transferencias/{id}/editar(id=${transferencia.id})}" sec:authorize="hasRole('ADMIN')">EDITAR</a>
+        <a class="btn btn-secundario" th:href="@{/transferencias}">VOLTAR</a>
+      </div>
+    </section>
+  </div>
+</div>
+</body>
+</html>

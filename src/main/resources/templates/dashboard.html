@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/base :: head('Dashboard')}"></head>
+<body>
+<div th:replace="~{fragments/base :: pagina('Dashboard', ~{::conteudo})}">
+  <div th:fragment="conteudo">
+    <section class="card">
+      <h2>FLUXO MENSAL</h2>
+      <form class="grid grid-2" method="get" th:action="@{/dashboard}">
+        <div>
+          <label for="competencia">COMPETENCIA</label>
+          <input id="competencia" name="competencia" type="month" th:value="${competencia}">
+        </div>
+        <div class="btn-grupo" style="align-self:end;">
+          <button class="btn btn-primario" type="submit">ATUALIZAR</button>
+          <a class="btn btn-secundario" th:href="@{/dashboard}">MES ATUAL</a>
+        </div>
+      </form>
+    </section>
+
+    <section class="card">
+      <h3>ATALHOS DE GESTAO</h3>
+      <div class="btn-grupo">
+        <a class="btn btn-secundario" th:href="@{/pessoas}">PESSOAS</a>
+        <a class="btn btn-secundario" th:href="@{/categorias}">CATEGORIAS</a>
+        <a class="btn btn-secundario" th:href="@{/contas}">CONTAS</a>
+        <a class="btn btn-secundario" th:href="@{/cartoes}">CARTOES</a>
+        <a class="btn btn-secundario" th:href="@{/lancamentos}">LANCAMENTOS</a>
+        <a class="btn btn-secundario" th:href="@{/transferencias}">TRANSFERENCIAS</a>
+        <a class="btn btn-secundario" th:href="@{/cobrancas}">COBRANCAS</a>
+        <a class="btn btn-secundario" th:href="@{/pagamentos}">PAGAMENTOS</a>
+        <a class="btn btn-secundario" th:href="@{/relatorios/pessoas}">RELATORIOS</a>
+        <a class="btn btn-secundario" th:href="@{/configuracoes/financeiras}">CONFIGURACOES</a>
+        <a class="btn btn-secundario" th:href="@{/usuarios}" sec:authorize="hasRole('ADMIN')">USUARIOS</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="resumo-grid">
+        <article class="kpi">
+          <h4>RECEITAS</h4>
+          <strong th:text="${@formatador.moeda(resumo.totalReceitas)}"></strong>
+        </article>
+        <article class="kpi">
+          <h4>DESPESAS</h4>
+          <strong th:text="${@formatador.moeda(resumo.totalDespesas)}"></strong>
+        </article>
+        <article class="kpi">
+          <h4>TRANSFERENCIAS</h4>
+          <strong th:text="${@formatador.moeda(resumo.totalTransferencias)}"></strong>
+        </article>
+        <article class="kpi">
+          <h4>COBRANCAS TERCEIROS</h4>
+          <strong th:text="${@formatador.moeda(resumo.totalCobrancasTerceiros)}"></strong>
+        </article>
+        <article class="kpi">
+          <h4>MINHA PARCELA FATURA</h4>
+          <strong th:text="${@formatador.moeda(resumo.minhaParcelaFatura)}"></strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="btn-grupo" style="justify-content:space-between;align-items:center;">
+        <h3>LANCAMENTOS DO MES</h3>
+        <a class="btn btn-primario" th:href="@{/lancamentos}">GERENCIAR</a>
+      </div>
+      <div class="tabela-wrapper">
+        <table class="tabela">
+          <thead>
+          <tr>
+            <th>DATA</th>
+            <th>NOME</th>
+            <th>TIPO</th>
+            <th>CATEGORIA</th>
+            <th>ORIGEM</th>
+            <th>VALOR</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:if="${#lists.isEmpty(lancamentos)}">
+            <td colspan="6">Nenhum lancamento encontrado para a competencia.</td>
+          </tr>
+          <tr th:each="item : ${lancamentos}">
+            <td th:text="${#temporals.format(item.dataOcorrencia, 'dd/MM/yyyy')}"></td>
+            <td>
+              <span th:text="${item.nome}"></span>
+              <small class="texto-muted" th:if="${item.parcelaAtual != null}" th:text="${'(' + item.parcelaAtual + '/' + item.totalParcelas + ')'}"></small>
+            </td>
+            <td th:text="${item.tipo}"></td>
+            <td th:text="${item.categoria}"></td>
+            <td th:text="${item.origem}"></td>
+            <td class="valor" th:classappend="${item.natureza.name() == 'RECEITA'} ? 'valor-receita' : 'valor-despesa'" th:text="${@formatador.moeda(item.valor)}"></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="btn-grupo" style="justify-content:space-between;align-items:center;">
+        <h3>TRANSFERENCIAS DO MES</h3>
+        <a class="btn btn-primario" th:href="@{/transferencias}">GERENCIAR</a>
+      </div>
+      <div class="tabela-wrapper">
+        <table class="tabela">
+          <thead>
+          <tr>
+            <th>DATA</th>
+            <th>DESCRICAO</th>
+            <th>ORIGEM</th>
+            <th>DESTINO</th>
+            <th>VALOR</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:if="${#lists.isEmpty(transferencias)}">
+            <td colspan="5">Nenhuma transferencia encontrada para a competencia.</td>
+          </tr>
+          <tr th:each="item : ${transferencias}">
+            <td th:text="${#temporals.format(item.dataOcorrencia, 'dd/MM/yyyy')}"></td>
+            <td>
+              <span th:text="${item.descricao}"></span>
+              <small class="texto-muted" th:if="${item.parcelaAtual != null}" th:text="${'(' + item.parcelaAtual + '/' + item.totalParcelas + ')'}"></small>
+            </td>
+            <td th:text="${item.contaOrigem}"></td>
+            <td th:text="${item.contaDestino}"></td>
+            <td class="valor" th:text="${@formatador.moeda(item.valor)}"></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="btn-grupo" style="justify-content:space-between;align-items:center;">
+        <h3>COBRANCAS DE TERCEIROS</h3>
+        <a class="btn btn-primario" th:href="@{/cobrancas}">GERENCIAR</a>
+      </div>
+      <div class="tabela-wrapper">
+        <table class="tabela">
+          <thead>
+          <tr>
+            <th>PESSOA</th>
+            <th>CARTAO</th>
+            <th>DESCRICAO</th>
+            <th>TIPO</th>
+            <th>VALOR</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:if="${#lists.isEmpty(cobrancas)}">
+            <td colspan="5">Nenhuma cobranca encontrada para a competencia.</td>
+          </tr>
+          <tr th:each="item : ${cobrancas}">
+            <td th:text="${item.pessoaNome}"></td>
+            <td th:text="${item.cartaoDescricao}"></td>
+            <td>
+              <span th:text="${item.descricao}"></span>
+              <small class="texto-muted" th:if="${item.parcelaAtual != null}" th:text="${'(' + item.parcelaAtual + '/' + item.totalParcelas + ')'}"></small>
+            </td>
+            <td th:text="${item.tipo}"></td>
+            <td class="valor" th:text="${@formatador.moeda(item.valor)}"></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>
+</body>
+</html>

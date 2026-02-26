@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Setup Inicial | Economizze</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="login-wrapper">
+  <div class="login-card">
+    <h2>CONFIGURACAO INICIAL</h2>
+    <p class="texto-muted">Crie o primeiro usuario administrador para liberar o sistema.</p>
+
+    <div class="alert alert-erro" th:if="${erroNegocio}" th:text="${erroNegocio}"></div>
+
+    <form th:action="@{/setup}" th:object="${setupAdminForm}" method="post" class="grid">
+      <div>
+        <label for="nomeCompleto">NOME COMPLETO</label>
+        <input id="nomeCompleto" th:field="*{nomeCompleto}" class="uppercase-input" required>
+        <small class="texto-muted" th:errors="*{nomeCompleto}"></small>
+      </div>
+      <div>
+        <label for="username">USUARIO</label>
+        <input id="username" th:field="*{username}" class="uppercase-input" required>
+        <small class="texto-muted" th:errors="*{username}"></small>
+      </div>
+      <div class="grid grid-2">
+        <div>
+          <label for="senha">SENHA</label>
+          <input id="senha" th:field="*{senha}" type="password" required>
+          <small class="texto-muted" th:errors="*{senha}"></small>
+        </div>
+        <div>
+          <label for="confirmarSenha">CONFIRMAR SENHA</label>
+          <input id="confirmarSenha" th:field="*{confirmarSenha}" type="password" required>
+          <small class="texto-muted" th:errors="*{confirmarSenha}"></small>
+        </div>
+      </div>
+      <button class="btn btn-primario" type="submit">CRIAR PRIMEIRO ADMINISTRADOR</button>
+    </form>
+  </div>
+</div>
+<script th:src="@{/js/app.js}"></script>
+</body>
+</html>

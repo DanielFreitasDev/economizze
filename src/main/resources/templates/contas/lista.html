@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/base :: head('Contas')}"></head>
+<body>
+<div th:replace="~{fragments/base :: pagina('Contas', ~{::conteudo})}">
+  <div th:fragment="conteudo">
+    <section class="card">
+      <div class="btn-grupo" style="justify-content:space-between;align-items:center;">
+        <h2>CONTAS</h2>
+        <a class="btn btn-primario" th:href="@{/contas/novo}" sec:authorize="hasRole('ADMIN')">NOVA CONTA</a>
+      </div>
+      <div class="tabela-wrapper">
+        <table class="tabela">
+          <thead><tr><th>NOME</th><th>BANCO</th><th>TIPO</th><th>SALDO INICIAL</th><th>STATUS</th><th>ACOES</th></tr></thead>
+          <tbody>
+          <tr th:if="${#lists.isEmpty(contas)}"><td colspan="6">Nenhuma conta cadastrada.</td></tr>
+          <tr th:each="item : ${contas}">
+            <td th:text="${item.nome}"></td>
+            <td th:text="${item.banco}"></td>
+            <td th:text="${item.tipoConta}"></td>
+            <td class="valor" th:text="${@formatador.moeda(item.saldoInicial)}"></td>
+            <td><span class="tag" th:classappend="${!item.ativo} ? 'tag-inativo'" th:text="${item.ativo} ? 'ATIVO' : 'INATIVO'"></span></td>
+            <td>
+              <div class="btn-grupo">
+                <a class="btn btn-secundario" th:href="@{/contas/{id}(id=${item.id})}">VER</a>
+                <a class="btn btn-sucesso" th:href="@{/contas/{id}/editar(id=${item.id})}" sec:authorize="hasRole('ADMIN')">EDITAR</a>
+                <form th:action="@{/contas/{id}/desativar(id=${item.id})}" method="post" th:if="${item.ativo}" sec:authorize="hasRole('ADMIN')">
+                  <button class="btn btn-alerta" type="submit">DESATIVAR</button>
+                </form>
+                <form th:action="@{/contas/{id}/excluir(id=${item.id})}" method="post" sec:authorize="hasRole('ADMIN')">
+                  <button class="btn btn-danger" type="submit">EXCLUIR</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/base :: head('Erro')}"></head>
+<body>
+<div th:replace="~{fragments/base :: pagina('Erro', ~{::conteudo})}">
+  <div th:fragment="conteudo">
+    <section class="card">
+      <h2>OCORREU UM ERRO</h2>
+      <p th:text="${mensagemErro ?: 'Nao foi possivel concluir a operacao.'}"></p>
+      <p class="texto-muted">Rota: <span th:text="${path}"></span></p>
+      <div class="btn-grupo">
+        <a class="btn btn-primario" th:href="@{/dashboard}">VOLTAR AO INICIO</a>
+      </div>
+    </section>
+  </div>
+</div>
+</body>
+</html>

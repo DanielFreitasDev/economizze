@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/base :: head('Formulario de Usuario')}"></head>
+<body>
+<div th:replace="~{fragments/base :: pagina('Usuarios', ~{::conteudo})}">
+  <div th:fragment="conteudo">
+    <section class="card">
+      <h2 th:text="${acao == 'criar'} ? 'NOVO USUARIO' : 'EDITAR USUARIO'"></h2>
+
+      <form class="grid" th:object="${usuarioForm}" th:action="${acao == 'criar'} ? @{/usuarios} : @{/usuarios/{id}(id=${usuario.id})}" method="post">
+        <div>
+          <label for="nomeCompleto">NOME COMPLETO</label>
+          <input id="nomeCompleto" th:field="*{nomeCompleto}" class="uppercase-input" required>
+          <small class="texto-muted" th:errors="*{nomeCompleto}"></small>
+        </div>
+
+        <div>
+          <label for="username">USUARIO</label>
+          <input id="username" th:field="*{username}" class="uppercase-input" required>
+          <small class="texto-muted" th:errors="*{username}"></small>
+        </div>
+
+        <div>
+          <label for="perfil">PERFIL</label>
+          <select id="perfil" th:field="*{perfil}" required>
+            <option value="">SELECIONE</option>
+            <option th:each="perfil : ${perfis}" th:value="${perfil}" th:text="${perfil}"></option>
+          </select>
+          <small class="texto-muted" th:errors="*{perfil}"></small>
+        </div>
+
+        <div th:if="${acao == 'criar'}">
+          <label for="senha">SENHA</label>
+          <input id="senha" th:field="*{senha}" type="password" required>
+          <small class="texto-muted" th:errors="*{senha}"></small>
+        </div>
+
+        <div class="btn-grupo">
+          <button class="btn btn-primario" type="submit">SALVAR</button>
+          <a class="btn btn-secundario" th:href="@{/usuarios}">VOLTAR</a>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>
+</body>
+</html>

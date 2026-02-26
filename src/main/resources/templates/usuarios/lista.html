@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/base :: head('Usuarios')}"></head>
+<body>
+<div th:replace="~{fragments/base :: pagina('Usuarios', ~{::conteudo})}">
+  <div th:fragment="conteudo">
+    <section class="card">
+      <div class="btn-grupo" style="justify-content:space-between;align-items:center;">
+        <h2>USUARIOS</h2>
+        <a class="btn btn-primario" th:href="@{/usuarios/novo}">NOVO USUARIO</a>
+      </div>
+
+      <div class="tabela-wrapper">
+        <table class="tabela">
+          <thead>
+          <tr>
+            <th>NOME</th>
+            <th>USUARIO</th>
+            <th>PERFIL</th>
+            <th>STATUS</th>
+            <th>ACOES</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:if="${#lists.isEmpty(usuarios)}"><td colspan="5">Nenhum usuario cadastrado.</td></tr>
+          <tr th:each="item : ${usuarios}">
+            <td th:text="${item.nomeCompleto}"></td>
+            <td th:text="${item.username}"></td>
+            <td th:text="${item.perfil}"></td>
+            <td><span class="tag" th:classappend="${!item.ativo} ? 'tag-inativo'" th:text="${item.ativo} ? 'ATIVO' : 'INATIVO'"></span></td>
+            <td>
+              <div class="btn-grupo">
+                <a class="btn btn-secundario" th:href="@{/usuarios/{id}(id=${item.id})}">VER</a>
+                <a class="btn btn-sucesso" th:href="@{/usuarios/{id}/editar(id=${item.id})}">EDITAR</a>
+                <a class="btn btn-secundario" th:href="@{/usuarios/{id}/senha(id=${item.id})}">SENHA</a>
+                <form th:action="@{/usuarios/{id}/desativar(id=${item.id})}" method="post" th:if="${item.ativo}">
+                  <button class="btn btn-alerta" type="submit">DESATIVAR</button>
+                </form>
+                <form th:action="@{/usuarios/{id}/excluir(id=${item.id})}" method="post">
+                  <button class="btn btn-danger" type="submit">EXCLUIR</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>
+</body>
+</html>

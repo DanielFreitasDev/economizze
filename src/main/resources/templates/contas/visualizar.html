@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/base :: head('Visualizar Conta')}"></head>
+<body>
+<div th:replace="~{fragments/base :: pagina('Contas', ~{::conteudo})}">
+  <div th:fragment="conteudo">
+    <section class="card">
+      <h2>DETALHES DA CONTA</h2>
+      <div class="grid grid-2">
+        <div><label>NOME</label><div th:text="${conta.nome}"></div></div>
+        <div><label>BANCO</label><div th:text="${conta.banco}"></div></div>
+        <div><label>TIPO</label><div th:text="${conta.tipoConta}"></div></div>
+        <div><label>SALDO INICIAL</label><div th:text="${@formatador.moeda(conta.saldoInicial)}"></div></div>
+        <div><label>STATUS</label><div th:text="${conta.ativo} ? 'ATIVO' : 'INATIVO'"></div></div>
+      </div>
+      <div class="btn-grupo" style="margin-top:1rem;">
+        <a class="btn btn-sucesso" th:href="@{/contas/{id}/editar(id=${conta.id})}" sec:authorize="hasRole('ADMIN')">EDITAR</a>
+        <a class="btn btn-secundario" th:href="@{/contas}">VOLTAR</a>
+      </div>
+    </section>
+  </div>
+</div>
+</body>
+</html>
