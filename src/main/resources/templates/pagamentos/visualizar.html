@@ -8,8 +8,8 @@
       <h2>DETALHES DO MOVIMENTO</h2>
       <div class="grid grid-2">
         <div><label>PESSOA</label><div th:text="${pagamento.pessoa.nome}"></div></div>
-        <div><label>CARTAO</label><div th:text="${pagamento.cartao.banco + ' **** ' + #strings.substring(pagamento.cartao.numeroCartao, pagamento.cartao.numeroCartao.length() - 4, pagamento.cartao.numeroCartao.length())}"></div></div>
-        <div><label>DESCRICAO</label><div th:text="${pagamento.descricao}"></div></div>
+        <div><label>CARTÃO</label><div th:text="${pagamento.cartao.banco + ' **** ' + #strings.substring(pagamento.cartao.numeroCartao, pagamento.cartao.numeroCartao.length() - 4, pagamento.cartao.numeroCartao.length())}"></div></div>
+        <div><label>DESCRIÇÃO</label><div th:text="${pagamento.descricao}"></div></div>
         <div><label>TIPO</label><div th:text="${pagamento.tipo}"></div></div>
         <div><label>VALOR</label><div th:text="${@formatador.moeda(pagamento.valor)}"></div></div>
         <div><label>DATA</label><div th:text="${#temporals.format(pagamento.dataPagamento, 'dd/MM/yyyy')}"></div></div>

@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="~{fragments/base :: head('Configuracoes Financeiras')}"></head>
+<head th:replace="~{fragments/base :: head('Configurações Financeiras')}"></head>
 <body>
-<div th:replace="~{fragments/base :: pagina('Configuracoes', ~{::conteudo})}">
+<div th:replace="~{fragments/base :: pagina('Configurações', ~{::conteudo})}">
   <div th:fragment="conteudo">
     <section class="card">
-      <h2>CONFIGURACOES FINANCEIRAS</h2>
+      <h2>CONFIGURAÇÕES FINANCEIRAS</h2>
       <form class="grid grid-2" th:object="${configuracaoFinanceiraForm}" th:action="@{/configuracoes/financeiras}" method="post">
         <div>
-          <label for="jurosPercentualPadrao">JUROS PADRAO (%)</label>
+          <label for="jurosPercentualPadrao">JUROS PADRÃO (%)</label>
           <input id="jurosPercentualPadrao" th:field="*{jurosPercentualPadrao}" required>
         </div>
         <div>
-          <label for="multaPercentualPadrao">MULTA PADRAO (%)</label>
+          <label for="multaPercentualPadrao">MULTA PADRÃO (%)</label>
           <input id="multaPercentualPadrao" th:field="*{multaPercentualPadrao}" required>
         </div>
         <div class="btn-grupo" sec:authorize="hasRole('ADMIN')">

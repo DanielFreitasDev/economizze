@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/base :: head('Formulario de Categoria')}"></head>
+<head th:replace="~{fragments/base :: head('Formulário de Categoria')}"></head>
 <body>
 <div th:replace="~{fragments/base :: pagina('Categorias', ~{::conteudo})}">
   <div th:fragment="conteudo">
@@ -13,7 +13,7 @@
           <small class="texto-muted" th:errors="*{nome}"></small>
         </div>
         <div>
-          <label for="descricao">DESCRICAO</label>
+          <label for="descricao">DESCRIÇÃO</label>
           <textarea id="descricao" th:field="*{descricao}" class="uppercase-input"></textarea>
           <small class="texto-muted" th:errors="*{descricao}"></small>
         </div>

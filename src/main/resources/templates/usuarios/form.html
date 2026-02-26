@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/base :: head('Formulario de Usuario')}"></head>
+<head th:replace="~{fragments/base :: head('Formulário de Usuário')}"></head>
 <body>
-<div th:replace="~{fragments/base :: pagina('Usuarios', ~{::conteudo})}">
+<div th:replace="~{fragments/base :: pagina('Usuários', ~{::conteudo})}">
   <div th:fragment="conteudo">
     <section class="card">
-      <h2 th:text="${acao == 'criar'} ? 'NOVO USUARIO' : 'EDITAR USUARIO'"></h2>
+      <h2 th:text="${acao == 'criar'} ? 'NOVO USUÁRIO' : 'EDITAR USUÁRIO'"></h2>
 
       <form class="grid" th:object="${usuarioForm}" th:action="${acao == 'criar'} ? @{/usuarios} : @{/usuarios/{id}(id=${usuario.id})}" method="post">
         <div>
@@ -15,7 +15,7 @@
         </div>
 
         <div>
-          <label for="username">USUARIO</label>
+          <label for="username">USUÁRIO</label>
           <input id="username" th:field="*{username}" class="uppercase-input" required>
           <small class="texto-muted" th:errors="*{username}"></small>
         </div>

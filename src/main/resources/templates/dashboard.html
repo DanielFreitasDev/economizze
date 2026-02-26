@@ -8,12 +8,12 @@
       <h2>FLUXO MENSAL</h2>
       <form class="grid grid-2" method="get" th:action="@{/dashboard}">
         <div>
-          <label for="competencia">COMPETENCIA</label>
+          <label for="competencia">COMPETÊNCIA</label>
           <input id="competencia" name="competencia" type="month" th:value="${competencia}">
         </div>
         <div class="btn-grupo" style="align-self:end;">
           <button class="btn btn-primario" type="submit">ATUALIZAR</button>
-          <a class="btn btn-secundario" th:href="@{/dashboard}">MES ATUAL</a>
+          <a class="btn btn-secundario" th:href="@{/dashboard}">MÊS ATUAL</a>
         </div>
       </form>
     </section>
@@ -29,11 +29,11 @@
           <strong th:text="${@formatador.moeda(resumo.totalDespesas)}"></strong>
         </article>
         <article class="kpi">
-          <h4>TRANSFERENCIAS</h4>
+          <h4>TRANSFERÊNCIAS</h4>
           <strong th:text="${@formatador.moeda(resumo.totalTransferencias)}"></strong>
         </article>
         <article class="kpi">
-          <h4>COBRANCAS TERCEIROS</h4>
+          <h4>COBRANÇAS DE TERCEIROS</h4>
           <strong th:text="${@formatador.moeda(resumo.totalCobrancasTerceiros)}"></strong>
         </article>
         <article class="kpi">
@@ -45,7 +45,7 @@
 
     <section class="card">
       <div class="btn-grupo" style="justify-content:space-between;align-items:center;">
-        <h3>LANCAMENTOS DO MES</h3>
+        <h3>LANÇAMENTOS DO MÊS</h3>
         <a class="btn btn-primario" th:href="@{/lancamentos}">GERENCIAR</a>
       </div>
       <div class="tabela-wrapper">
@@ -62,7 +62,7 @@
           </thead>
           <tbody>
           <tr th:if="${#lists.isEmpty(lancamentos)}">
-            <td colspan="6">Nenhum lancamento encontrado para a competencia.</td>
+            <td colspan="6">Nenhum lançamento encontrado para a competência.</td>
           </tr>
           <tr th:each="item : ${lancamentos}">
             <td th:text="${#temporals.format(item.dataOcorrencia, 'dd/MM/yyyy')}"></td>
@@ -82,7 +82,7 @@
 
     <section class="card">
       <div class="btn-grupo" style="justify-content:space-between;align-items:center;">
-        <h3>TRANSFERENCIAS DO MES</h3>
+        <h3>TRANSFERÊNCIAS DO MÊS</h3>
         <a class="btn btn-primario" th:href="@{/transferencias}">GERENCIAR</a>
       </div>
       <div class="tabela-wrapper">
@@ -90,7 +90,7 @@
           <thead>
           <tr>
             <th>DATA</th>
-            <th>DESCRICAO</th>
+            <th>DESCRIÇÃO</th>
             <th>ORIGEM</th>
             <th>DESTINO</th>
             <th>VALOR</th>
@@ -98,7 +98,7 @@
           </thead>
           <tbody>
           <tr th:if="${#lists.isEmpty(transferencias)}">
-            <td colspan="5">Nenhuma transferencia encontrada para a competencia.</td>
+            <td colspan="5">Nenhuma transferência encontrada para a competência.</td>
           </tr>
           <tr th:each="item : ${transferencias}">
             <td th:text="${#temporals.format(item.dataOcorrencia, 'dd/MM/yyyy')}"></td>
@@ -117,7 +117,7 @@
 
     <section class="card">
       <div class="btn-grupo" style="justify-content:space-between;align-items:center;">
-        <h3>COBRANCAS DE TERCEIROS</h3>
+        <h3>COBRANÇAS DE TERCEIROS</h3>
         <a class="btn btn-primario" th:href="@{/cobrancas}">GERENCIAR</a>
       </div>
       <div class="tabela-wrapper">
@@ -125,15 +125,15 @@
           <thead>
           <tr>
             <th>PESSOA</th>
-            <th>CARTAO</th>
-            <th>DESCRICAO</th>
+            <th>CARTÃO</th>
+            <th>DESCRIÇÃO</th>
             <th>TIPO</th>
             <th>VALOR</th>
           </tr>
           </thead>
           <tbody>
           <tr th:if="${#lists.isEmpty(cobrancas)}">
-            <td colspan="5">Nenhuma cobranca encontrada para a competencia.</td>
+            <td colspan="5">Nenhuma cobrança encontrada para a competência.</td>
           </tr>
           <tr th:each="item : ${cobrancas}">
             <td th:text="${item.pessoaNome}"></td>

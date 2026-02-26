@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/base :: head('Formulario de Pessoa')}"></head>
+<head th:replace="~{fragments/base :: head('Formulário de Pessoa')}"></head>
 <body>
 <div th:replace="~{fragments/base :: pagina('Pessoas', ~{::conteudo})}">
   <div th:fragment="conteudo">
@@ -30,7 +30,7 @@
             <input id="logradouro" th:field="*{logradouro}" class="uppercase-input">
           </div>
           <div>
-            <label for="numero">NUMERO</label>
+            <label for="numero">NÚMERO</label>
             <input id="numero" th:field="*{numero}" class="uppercase-input">
           </div>
         </div>
@@ -56,7 +56,7 @@
             <input id="estado" th:field="*{estado}" class="uppercase-input">
           </div>
           <div>
-            <label for="pontoReferencia">PONTO DE REFERENCIA</label>
+            <label for="pontoReferencia">PONTO DE REFERÊNCIA</label>
             <input id="pontoReferencia" th:field="*{pontoReferencia}" class="uppercase-input">
           </div>
           <div>

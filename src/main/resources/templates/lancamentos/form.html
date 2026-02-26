@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/base :: head('Formulario de Lancamento')}"></head>
+<head th:replace="~{fragments/base :: head('Formulário de Lançamento')}"></head>
 <body>
-<div th:replace="~{fragments/base :: pagina('Lancamentos', ~{::conteudo})}">
+<div th:replace="~{fragments/base :: pagina('Lançamentos', ~{::conteudo})}">
   <div th:fragment="conteudo">
     <section class="card">
-      <h2 th:text="${acao == 'criar'} ? 'NOVO LANCAMENTO' : 'EDITAR LANCAMENTO'"></h2>
+      <h2 th:text="${acao == 'criar'} ? 'NOVO LANÇAMENTO' : 'EDITAR LANÇAMENTO'"></h2>
       <form class="grid" th:object="${lancamentoForm}" th:action="${acao == 'criar'} ? @{/lancamentos} : @{/lancamentos/{id}(id=${lancamento.id})}" method="post">
         <div class="grid grid-2">
           <div>
@@ -44,21 +44,21 @@
 
         <div class="grid grid-3">
           <div>
-            <label for="contaId">CONTA (ESCOLHER CONTA OU CARTAO)</label>
+            <label for="contaId">CONTA (ESCOLHER CONTA OU CARTÃO)</label>
             <select id="contaId" th:field="*{contaId}">
               <option value="">SELECIONE</option>
               <option th:each="conta : ${contas}" th:value="${conta.id}" th:text="${conta.nome}"></option>
             </select>
           </div>
           <div>
-            <label for="cartaoId">CARTAO (ESCOLHER CONTA OU CARTAO)</label>
+            <label for="cartaoId">CARTÃO (ESCOLHER CONTA OU CARTÃO)</label>
             <select id="cartaoId" th:field="*{cartaoId}">
               <option value="">SELECIONE</option>
               <option th:each="cartao : ${cartoes}" th:value="${cartao.id}" th:text="${cartao.banco + ' **** ' + #strings.substring(cartao.numeroCartao, cartao.numeroCartao.length() - 4, cartao.numeroCartao.length())}"></option>
             </select>
           </div>
           <div>
-            <label for="competenciaFaturaInicial">COMPETENCIA FATURA (CARTAO)</label>
+            <label for="competenciaFaturaInicial">COMPETÊNCIA FATURA (CARTÃO)</label>
             <select id="competenciaFaturaInicial" th:field="*{competenciaFaturaInicial}">
               <option value="">SELECIONE</option>
               <option th:if="*{competenciaFaturaInicial != null}"
@@ -84,7 +84,7 @@
         </div>
 
         <div>
-          <label for="observacao">OBSERVACAO</label>
+          <label for="observacao">OBSERVAÇÃO</label>
           <textarea id="observacao" th:field="*{observacao}" class="uppercase-input"></textarea>
         </div>
 

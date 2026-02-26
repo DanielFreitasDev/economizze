@@ -11,7 +11,7 @@
       </div>
       <div class="tabela-wrapper">
         <table class="tabela">
-          <thead><tr><th>NOME</th><th>BANCO</th><th>TIPO</th><th>SALDO INICIAL</th><th>STATUS</th><th>ACOES</th></tr></thead>
+          <thead><tr><th>NOME</th><th>BANCO</th><th>TIPO</th><th>SALDO INICIAL</th><th>STATUS</th><th>AÇÕES</th></tr></thead>
           <tbody>
           <tr th:if="${#lists.isEmpty(contas)}"><td colspan="6">Nenhuma conta cadastrada.</td></tr>
           <tr th:each="item : ${contas}">

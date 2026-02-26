@@ -12,7 +12,7 @@
 
       <div class="tabela-wrapper">
         <table class="tabela">
-          <thead><tr><th>NOME</th><th>DESCRICAO</th><th>STATUS</th><th>ACOES</th></tr></thead>
+          <thead><tr><th>NOME</th><th>DESCRIÇÃO</th><th>STATUS</th><th>AÇÕES</th></tr></thead>
           <tbody>
           <tr th:if="${#lists.isEmpty(categorias)}"><td colspan="4">Nenhuma categoria cadastrada.</td></tr>
           <tr th:each="item : ${categorias}">

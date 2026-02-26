@@ -13,12 +13,12 @@
     <p class="texto-muted">Controle financeiro completo, com foco em mobilidade.</p>
 
     <div class="alert alert-sucesso" th:if="${param.setupConcluido}">Primeiro administrador criado com sucesso.</div>
-    <div class="alert alert-erro" th:if="${param.error}">Usuario ou senha invalidos.</div>
-    <div class="alert alert-sucesso" th:if="${param.logout}">Sessao encerrada com sucesso.</div>
+    <div class="alert alert-erro" th:if="${param.error}">Usuário ou senha inválidos.</div>
+    <div class="alert alert-sucesso" th:if="${param.logout}">Sessão encerrada com sucesso.</div>
 
     <form th:action="@{/login}" method="post" class="grid">
       <div>
-        <label for="username">USUARIO</label>
+        <label for="username">USUÁRIO</label>
         <input id="username" name="username" class="uppercase-input" required>
       </div>
       <div>

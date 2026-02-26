@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/base :: head('Formulario de Pagamento')}"></head>
+<head th:replace="~{fragments/base :: head('Formulário de Pagamento')}"></head>
 <body>
 <div th:replace="~{fragments/base :: pagina('Pagamentos', ~{::conteudo})}">
   <div th:fragment="conteudo">
@@ -16,7 +16,7 @@
             </select>
           </div>
           <div>
-            <label for="cartaoId">CARTAO *</label>
+            <label for="cartaoId">CARTÃO *</label>
             <select id="cartaoId" th:field="*{cartaoId}" required>
               <option value="">SELECIONE</option>
               <option th:each="cartao : ${cartoes}" th:value="${cartao.id}" th:text="${cartao.banco + ' **** ' + #strings.substring(cartao.numeroCartao, cartao.numeroCartao.length() - 4, cartao.numeroCartao.length())}"></option>
@@ -33,7 +33,7 @@
 
         <div class="grid grid-3">
           <div>
-            <label for="descricao">DESCRICAO *</label>
+            <label for="descricao">DESCRIÇÃO *</label>
             <input id="descricao" th:field="*{descricao}" class="uppercase-input" required>
           </div>
           <div>

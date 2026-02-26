@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/base :: head('Formulario de Cartao')}"></head>
+<head th:replace="~{fragments/base :: head('Formulário de Cartão')}"></head>
 <body>
-<div th:replace="~{fragments/base :: pagina('Cartoes', ~{::conteudo})}">
+<div th:replace="~{fragments/base :: pagina('Cartões', ~{::conteudo})}">
   <div th:fragment="conteudo">
     <section class="card">
-      <h2 th:text="${acao == 'criar'} ? 'NOVO CARTAO' : 'EDITAR CARTAO'"></h2>
+      <h2 th:text="${acao == 'criar'} ? 'NOVO CARTÃO' : 'EDITAR CARTÃO'"></h2>
       <form class="grid" th:object="${cartaoForm}" th:action="${acao == 'criar'} ? @{/cartoes} : @{/cartoes/{id}(id=${cartao.id})}" method="post">
         <div class="grid grid-2">
           <div>
-            <label for="numeroCartao">NUMERO DO CARTAO *</label>
+            <label for="numeroCartao">NÚMERO DO CARTÃO *</label>
             <input id="numeroCartao" th:field="*{numeroCartao}" class="cartao-mask" required>
           </div>
           <div>

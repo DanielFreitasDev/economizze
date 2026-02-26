@@ -16,23 +16,23 @@
       <div class="topbar-grid">
         <h1 th:text="${nomeAplicacao}">Economizze</h1>
         <small th:if="${usuarioLogado != null}">
-          USUARIO: <span th:text="${usuarioLogado.nomeCompleto}"></span>
+          USUÁRIO: <span th:text="${usuarioLogado.nomeCompleto}"></span>
           | PERFIL: <span th:text="${usuarioLogado.perfil}"></span>
         </small>
       </div>
       <nav class="nav-mobile">
-        <a th:href="@{/dashboard}" th:classappend="${caminhoAtual == '/dashboard'} ? 'ativo'">INICIO</a>
-        <a th:href="@{/lancamentos}" th:classappend="${#strings.startsWith(caminhoAtual, '/lancamentos')} ? 'ativo'">LANCAMENTOS</a>
-        <a th:href="@{/cobrancas}" th:classappend="${#strings.startsWith(caminhoAtual, '/cobrancas')} ? 'ativo'">COBRANCAS</a>
+        <a th:href="@{/dashboard}" th:classappend="${caminhoAtual == '/dashboard'} ? 'ativo'">INÍCIO</a>
+        <a th:href="@{/lancamentos}" th:classappend="${#strings.startsWith(caminhoAtual, '/lancamentos')} ? 'ativo'">LANÇAMENTOS</a>
+        <a th:href="@{/cobrancas}" th:classappend="${#strings.startsWith(caminhoAtual, '/cobrancas')} ? 'ativo'">COBRANÇAS</a>
         <a th:href="@{/pessoas}" th:classappend="${#strings.startsWith(caminhoAtual, '/pessoas')} ? 'ativo'">PESSOAS</a>
-        <a th:href="@{/cartoes}" th:classappend="${#strings.startsWith(caminhoAtual, '/cartoes')} ? 'ativo'">CARTOES</a>
+        <a th:href="@{/cartoes}" th:classappend="${#strings.startsWith(caminhoAtual, '/cartoes')} ? 'ativo'">CARTÕES</a>
         <a th:href="@{/categorias}" th:classappend="${#strings.startsWith(caminhoAtual, '/categorias')} ? 'ativo'">CATEGORIAS</a>
         <a th:href="@{/contas}" th:classappend="${#strings.startsWith(caminhoAtual, '/contas')} ? 'ativo'">CONTAS</a>
-        <a th:href="@{/transferencias}" th:classappend="${#strings.startsWith(caminhoAtual, '/transferencias')} ? 'ativo'">TRANSFERENCIAS</a>
+        <a th:href="@{/transferencias}" th:classappend="${#strings.startsWith(caminhoAtual, '/transferencias')} ? 'ativo'">TRANSFERÊNCIAS</a>
         <a th:href="@{/pagamentos}" th:classappend="${#strings.startsWith(caminhoAtual, '/pagamentos')} ? 'ativo'">PAGAMENTOS</a>
-        <a th:href="@{/relatorios/pessoas}" th:classappend="${#strings.startsWith(caminhoAtual, '/relatorios')} ? 'ativo'">RELATORIOS</a>
-        <a th:href="@{/configuracoes/financeiras}" th:classappend="${#strings.startsWith(caminhoAtual, '/configuracoes')} ? 'ativo'">CONFIGURACOES</a>
-        <a th:href="@{/usuarios}" sec:authorize="hasRole('ADMIN')" th:classappend="${#strings.startsWith(caminhoAtual, '/usuarios')} ? 'ativo'">USUARIOS</a>
+        <a th:href="@{/relatorios/pessoas}" th:classappend="${#strings.startsWith(caminhoAtual, '/relatorios')} ? 'ativo'">RELATÓRIOS</a>
+        <a th:href="@{/configuracoes/financeiras}" th:classappend="${#strings.startsWith(caminhoAtual, '/configuracoes')} ? 'ativo'">CONFIGURAÇÕES</a>
+        <a th:href="@{/usuarios}" sec:authorize="hasRole('ADMIN')" th:classappend="${#strings.startsWith(caminhoAtual, '/usuarios')} ? 'ativo'">USUÁRIOS</a>
         <form class="menu-sair" th:action="@{/logout}" method="post">
           <button class="btn-menu-sair" type="submit">SAIR</button>
         </form>

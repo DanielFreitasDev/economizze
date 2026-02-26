@@ -2,11 +2,11 @@
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/base :: head('Alterar Senha')}"></head>
 <body>
-<div th:replace="~{fragments/base :: pagina('Usuarios', ~{::conteudo})}">
+<div th:replace="~{fragments/base :: pagina('Usuários', ~{::conteudo})}">
   <div th:fragment="conteudo">
     <section class="card">
       <h2>ALTERAR SENHA</h2>
-      <p class="texto-muted">Usuario: <strong th:text="${usuario.nomeCompleto}"></strong></p>
+      <p class="texto-muted">Usuário: <strong th:text="${usuario.nomeCompleto}"></strong></p>
 
       <form class="grid" th:object="${alterarSenhaForm}" th:action="@{/usuarios/{id}/senha(id=${usuario.id})}" method="post">
         <div>

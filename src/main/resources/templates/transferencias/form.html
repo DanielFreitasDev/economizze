@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/base :: head('Formulario de Transferencia')}"></head>
+<head th:replace="~{fragments/base :: head('Formulário de Transferência')}"></head>
 <body>
-<div th:replace="~{fragments/base :: pagina('Transferencias', ~{::conteudo})}">
+<div th:replace="~{fragments/base :: pagina('Transferências', ~{::conteudo})}">
   <div th:fragment="conteudo">
     <section class="card">
-      <h2 th:text="${acao == 'criar'} ? 'NOVA TRANSFERENCIA' : 'EDITAR TRANSFERENCIA'"></h2>
+      <h2 th:text="${acao == 'criar'} ? 'NOVA TRANSFERÊNCIA' : 'EDITAR TRANSFERÊNCIA'"></h2>
       <form class="grid" th:object="${transferenciaForm}" th:action="${acao == 'criar'} ? @{/transferencias} : @{/transferencias/{id}(id=${transferencia.id})}" method="post">
         <div>
-          <label for="descricao">DESCRICAO *</label>
+          <label for="descricao">DESCRIÇÃO *</label>
           <input id="descricao" th:field="*{descricao}" class="uppercase-input" required>
         </div>
 
@@ -53,11 +53,11 @@
 
         <div class="grid grid-2">
           <div>
-            <label for="dataFimRecorrencia">DATA FIM RECORRENCIA</label>
+            <label for="dataFimRecorrencia">DATA FIM RECORRÊNCIA</label>
             <input id="dataFimRecorrencia" th:field="*{dataFimRecorrencia}" type="date">
           </div>
           <div>
-            <label for="observacao">OBSERVACAO</label>
+            <label for="observacao">OBSERVAÇÃO</label>
             <textarea id="observacao" th:field="*{observacao}" class="uppercase-input"></textarea>
           </div>
         </div>

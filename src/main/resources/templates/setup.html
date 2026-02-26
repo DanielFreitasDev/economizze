@@ -9,8 +9,8 @@
 <body>
 <div class="login-wrapper">
   <div class="login-card">
-    <h2>CONFIGURACAO INICIAL</h2>
-    <p class="texto-muted">Crie o primeiro usuario administrador para liberar o sistema.</p>
+    <h2>CONFIGURAÇÃO INICIAL</h2>
+    <p class="texto-muted">Crie o primeiro usuário administrador para liberar o sistema.</p>
 
     <div class="alert alert-erro" th:if="${erroNegocio}" th:text="${erroNegocio}"></div>
 
@@ -21,7 +21,7 @@
         <small class="texto-muted" th:errors="*{nomeCompleto}"></small>
       </div>
       <div>
-        <label for="username">USUARIO</label>
+        <label for="username">USUÁRIO</label>
         <input id="username" th:field="*{username}" class="uppercase-input" required>
         <small class="texto-muted" th:errors="*{username}"></small>
       </div>

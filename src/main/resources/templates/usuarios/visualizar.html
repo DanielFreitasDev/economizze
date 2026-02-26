@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/base :: head('Visualizar Usuario')}"></head>
+<head th:replace="~{fragments/base :: head('Visualizar Usuário')}"></head>
 <body>
-<div th:replace="~{fragments/base :: pagina('Usuarios', ~{::conteudo})}">
+<div th:replace="~{fragments/base :: pagina('Usuários', ~{::conteudo})}">
   <div th:fragment="conteudo">
     <section class="card">
-      <h2>DETALHES DO USUARIO</h2>
+      <h2>DETALHES DO USUÁRIO</h2>
       <div class="grid grid-2">
         <div><label>NOME</label><div th:text="${usuario.nomeCompleto}"></div></div>
-        <div><label>USUARIO</label><div th:text="${usuario.username}"></div></div>
+        <div><label>USUÁRIO</label><div th:text="${usuario.username}"></div></div>
         <div><label>PERFIL</label><div th:text="${usuario.perfil}"></div></div>
         <div><label>STATUS</label><div th:text="${usuario.ativo} ? 'ATIVO' : 'INATIVO'"></div></div>
       </div>

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="~{fragments/base :: head('Visualizar Lancamento')}"></head>
+<head th:replace="~{fragments/base :: head('Visualizar Lançamento')}"></head>
 <body>
-<div th:replace="~{fragments/base :: pagina('Lancamentos', ~{::conteudo})}">
+<div th:replace="~{fragments/base :: pagina('Lançamentos', ~{::conteudo})}">
   <div th:fragment="conteudo">
     <section class="card">
-      <h2>DETALHES DO LANCAMENTO</h2>
+      <h2>DETALHES DO LANÇAMENTO</h2>
       <div class="grid grid-2">
         <div><label>NOME</label><div th:text="${lancamento.nome}"></div></div>
         <div><label>NATUREZA</label><div th:text="${lancamento.natureza}"></div></div>

@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="~{fragments/base :: head('Cartoes')}"></head>
+<head th:replace="~{fragments/base :: head('Cartões')}"></head>
 <body>
-<div th:replace="~{fragments/base :: pagina('Cartoes', ~{::conteudo})}">
+<div th:replace="~{fragments/base :: pagina('Cartões', ~{::conteudo})}">
   <div th:fragment="conteudo">
     <section class="card">
       <div class="btn-grupo" style="justify-content:space-between;align-items:center;">
-        <h2>CARTOES</h2>
-        <a class="btn btn-primario" th:href="@{/cartoes/novo}" sec:authorize="hasRole('ADMIN')">NOVO CARTAO</a>
+        <h2>CARTÕES</h2>
+        <a class="btn btn-primario" th:href="@{/cartoes/novo}" sec:authorize="hasRole('ADMIN')">NOVO CARTÃO</a>
       </div>
       <div class="tabela-wrapper">
         <table class="tabela">
-          <thead><tr><th>NUMERO</th><th>BANDEIRA</th><th>BANCO</th><th>FECHAMENTO</th><th>VENCIMENTO</th><th>STATUS</th><th>ACOES</th></tr></thead>
+          <thead><tr><th>NÚMERO</th><th>BANDEIRA</th><th>BANCO</th><th>FECHAMENTO</th><th>VENCIMENTO</th><th>STATUS</th><th>AÇÕES</th></tr></thead>
           <tbody>
-          <tr th:if="${#lists.isEmpty(cartoes)}"><td colspan="7">Nenhum cartao cadastrado.</td></tr>
+          <tr th:if="${#lists.isEmpty(cartoes)}"><td colspan="7">Nenhum cartão cadastrado.</td></tr>
           <tr th:each="item : ${cartoes}">
             <td th:text="${@formatador.maskCartao(item.numeroCartao)}"></td>
             <td th:text="${item.bandeira}"></td>

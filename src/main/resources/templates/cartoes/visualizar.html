@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="~{fragments/base :: head('Visualizar Cartao')}"></head>
+<head th:replace="~{fragments/base :: head('Visualizar Cartão')}"></head>
 <body>
-<div th:replace="~{fragments/base :: pagina('Cartoes', ~{::conteudo})}">
+<div th:replace="~{fragments/base :: pagina('Cartões', ~{::conteudo})}">
   <div th:fragment="conteudo">
     <section class="card">
-      <h2>DETALHES DO CARTAO</h2>
+      <h2>DETALHES DO CARTÃO</h2>
       <div class="grid grid-2">
-        <div><label>NUMERO</label><div th:text="${@formatador.maskCartao(cartao.numeroCartao)}"></div></div>
+        <div><label>NÚMERO</label><div th:text="${@formatador.maskCartao(cartao.numeroCartao)}"></div></div>
         <div><label>BANDEIRA</label><div th:text="${cartao.bandeira}"></div></div>
         <div><label>BANCO</label><div th:text="${cartao.banco}"></div></div>
         <div><label>FECHAMENTO</label><div th:text="${cartao.diaFechamento}"></div></div>

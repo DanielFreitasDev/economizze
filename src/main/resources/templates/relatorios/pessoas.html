@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/base :: head('Relatorio por Pessoa')}"></head>
+<head th:replace="~{fragments/base :: head('Relatório por Pessoa')}"></head>
 <body>
-<div th:replace="~{fragments/base :: pagina('Relatorios', ~{::conteudo})}">
+<div th:replace="~{fragments/base :: pagina('Relatórios', ~{::conteudo})}">
   <div th:fragment="conteudo">
     <section class="card">
-      <h2>RELATORIO ANALITICO POR PESSOA</h2>
+      <h2>RELATÓRIO ANALÍTICO POR PESSOA</h2>
       <form class="grid grid-3" method="get" th:action="@{/relatorios/pessoas}" th:object="${filtro}">
         <div>
           <label for="pessoaId">PESSOA *</label>
@@ -15,7 +15,7 @@
           </select>
         </div>
         <div>
-          <label for="competencia">COMPETENCIA *</label>
+          <label for="competencia">COMPETÊNCIA *</label>
           <input id="competencia" th:field="*{competencia}" type="month" required>
         </div>
         <div class="btn-grupo" style="align-self:end;">
@@ -29,7 +29,7 @@
       <h3>RESUMO GERAL (TODAS AS PESSOAS)</h3>
       <div class="tabela-wrapper">
         <table class="tabela">
-          <thead><tr><th>PESSOA</th><th>CPF</th><th>SALDO EM ABERTO</th><th>ACAO</th></tr></thead>
+          <thead><tr><th>PESSOA</th><th>CPF</th><th>SALDO EM ABERTO</th><th>AÇÃO</th></tr></thead>
           <tbody>
           <tr th:if="${#lists.isEmpty(resumoGeral)}"><td colspan="4">Sem pessoas para resumo.</td></tr>
           <tr th:each="item : ${resumoGeral}">
@@ -47,17 +47,17 @@
     </section>
 
     <section class="card" th:if="${relatorio != null}">
-      <h3>RESUMO POR CARTAO</h3>
+      <h3>RESUMO POR CARTÃO</h3>
       <p><strong>Pessoa:</strong> <span th:text="${relatorio.pessoaNome}"></span> | <strong>CPF:</strong> <span th:text="${@formatador.maskCpf(relatorio.cpf)}"></span></p>
       <p><strong>Total em aberto:</strong> <span class="valor" th:text="${@formatador.moeda(relatorio.totalGeralAberto)}"></span></p>
 
       <div class="tabela-wrapper">
         <table class="tabela">
           <thead>
-          <tr><th>CARTAO</th><th>AVULSO</th><th>RECORRENTE</th><th>PARCELADO</th><th>ENCARGOS</th><th>PAGAMENTOS</th><th>SALDO</th></tr>
+          <tr><th>CARTÃO</th><th>AVULSO</th><th>RECORRENTE</th><th>PARCELADO</th><th>ENCARGOS</th><th>PAGAMENTOS</th><th>SALDO</th></tr>
           </thead>
           <tbody>
-          <tr th:if="${#lists.isEmpty(relatorio.resumosPorCartao)}"><td colspan="7">Sem dados para o periodo.</td></tr>
+          <tr th:if="${#lists.isEmpty(relatorio.resumosPorCartao)}"><td colspan="7">Sem dados para o período.</td></tr>
           <tr th:each="item : ${relatorio.resumosPorCartao}">
             <td th:text="${item.cartaoDescricao}"></td>
             <td th:text="${@formatador.moeda(item.totalAvulso)}"></td>
@@ -73,12 +73,12 @@
     </section>
 
     <section class="card" th:if="${relatorio != null}">
-      <h3>DETALHAMENTO DA COMPETENCIA</h3>
+      <h3>DETALHAMENTO DA COMPETÊNCIA</h3>
       <div class="tabela-wrapper">
         <table class="tabela">
-          <thead><tr><th>CARTAO</th><th>DESCRICAO</th><th>TIPO</th><th>PARCELA</th><th>VALOR</th></tr></thead>
+          <thead><tr><th>CARTÃO</th><th>DESCRIÇÃO</th><th>TIPO</th><th>PARCELA</th><th>VALOR</th></tr></thead>
           <tbody>
-          <tr th:if="${#lists.isEmpty(relatorio.cobrancasCompetencia)}"><td colspan="5">Sem cobrancas para esta competencia.</td></tr>
+          <tr th:if="${#lists.isEmpty(relatorio.cobrancasCompetencia)}"><td colspan="5">Sem cobranças para esta competência.</td></tr>
           <tr th:each="item : ${relatorio.cobrancasCompetencia}">
             <td th:text="${item.cartaoDescricao}"></td>
             <td th:text="${item.descricao}"></td>

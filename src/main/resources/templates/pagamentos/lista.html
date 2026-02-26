@@ -11,7 +11,7 @@
       </div>
       <div class="tabela-wrapper">
         <table class="tabela">
-          <thead><tr><th>DATA</th><th>PESSOA</th><th>CARTAO</th><th>DESCRICAO</th><th>TIPO</th><th>VALOR</th><th>STATUS</th><th>ACOES</th></tr></thead>
+          <thead><tr><th>DATA</th><th>PESSOA</th><th>CARTÃO</th><th>DESCRIÇÃO</th><th>TIPO</th><th>VALOR</th><th>STATUS</th><th>AÇÕES</th></tr></thead>
           <tbody>
           <tr th:if="${#lists.isEmpty(pagamentos)}"><td colspan="8">Nenhum movimento cadastrado.</td></tr>
           <tr th:each="item : ${pagamentos}">
