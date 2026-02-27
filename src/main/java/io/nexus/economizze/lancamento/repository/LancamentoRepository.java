@@ -3,6 +3,7 @@ package io.nexus.economizze.lancamento.repository;
 import io.nexus.economizze.lancamento.model.Lancamento;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -19,6 +20,10 @@ public interface LancamentoRepository extends JpaRepository<Lancamento, Long> {
 
     @EntityGraph(attributePaths = {"categoria", "conta", "cartao"})
     List<Lancamento> findAllByAtivoTrueAndDataBaseLessThanEqualOrderByDataBaseAscNomeAsc(LocalDate data);
+
+    @Override
+    @EntityGraph(attributePaths = {"categoria", "conta", "cartao"})
+    Optional<Lancamento> findById(Long id);
 
     boolean existsByCategoriaId(Long categoriaId);
 
