@@ -15,6 +15,8 @@ import io.nexus.economizze.shared.exception.RegraDeNegocioException;
 import io.nexus.economizze.shared.exception.RecursoNaoEncontradoException;
 import io.nexus.economizze.shared.util.NumeroUtil;
 import io.nexus.economizze.shared.util.TextoUtil;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -236,6 +238,7 @@ public class CobrancaPessoaService {
 
         Integer parcelaAtual = null;
         Integer totalParcelas = cobranca.getTotalParcelas();
+        BigDecimal valorOcorrencia = cobranca.getValor();
 
         switch (cobranca.getTipo()) {
             case AVULSO -> {
@@ -260,6 +263,7 @@ public class CobrancaPessoaService {
                     return null;
                 }
                 parcelaAtual = indice + 1;
+                valorOcorrencia = calcularValorOcorrenciaParcelada(cobranca.getValor(), totalParcelas, indice);
             }
         }
 
@@ -271,11 +275,49 @@ public class CobrancaPessoaService {
                 descricaoCartao(cobranca.getCartao()),
                 cobranca.getDescricao(),
                 cobranca.getTipo(),
-                cobranca.getValor(),
+                valorOcorrencia,
                 competencia.atDay(1),
                 parcelaAtual,
                 totalParcelas
         );
+    }
+
+    /**
+     * Calcula o valor monetario de uma parcela especifica a partir do valor total informado.
+     *
+     * <p>Regra aplicada:</p>
+     * <ul>
+     *   <li>o valor digitado no cadastro parcelado representa o total da compra;</li>
+     *   <li>o total e convertido para centavos para evitar erro de ponto flutuante;</li>
+     *   <li>os centavos residuais sao distribuidos nas primeiras parcelas;</li>
+     *   <li>a soma das parcelas sempre fecha exatamente com o total original.</li>
+     * </ul>
+     *
+     * @param valorTotal valor total da cobranca parcelada
+     * @param totalParcelas quantidade total de parcelas da cobranca
+     * @param indiceParcela indice da parcela atual (base zero)
+     * @return valor monetario da parcela atual com duas casas decimais
+     */
+    private BigDecimal calcularValorOcorrenciaParcelada(BigDecimal valorTotal, int totalParcelas, int indiceParcela) {
+        // Guardas defensivas para evitar divisao invalida em cenarios de dados inconsistentes.
+        if (valorTotal == null || totalParcelas <= 0 || indiceParcela < 0 || indiceParcela >= totalParcelas) {
+            return valorTotal;
+        }
+
+        // Converte para centavos com arredondamento financeiro para padronizar qualquer escala recebida.
+        long valorTotalEmCentavos = valorTotal
+                .movePointRight(2)
+                .setScale(0, RoundingMode.HALF_UP)
+                .longValueExact();
+
+        // Calcula o valor base inteiro por parcela e quantos centavos sobram para distribuir.
+        long centavosBasePorParcela = valorTotalEmCentavos / totalParcelas;
+        long centavosRestantes = valorTotalEmCentavos % totalParcelas;
+
+        // As primeiras parcelas recebem +1 centavo ate esgotar o resto, garantindo soma exata no final.
+        long valorParcelaEmCentavos = centavosBasePorParcela + (indiceParcela < centavosRestantes ? 1 : 0);
+
+        return BigDecimal.valueOf(valorParcelaEmCentavos, 2);
     }
 
     /**
